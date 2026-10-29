@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zenith Panel - Sign in</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23101014'/><text x='16' y='22' font-size='18' font-family='Arial' font-weight='700' fill='%23fff' text-anchor='middle'>Z</text></svg>">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="auth-wrap">
+  <div class="auth-art">
+    <div class="grid-lines"></div>
+    <div class="brand" style="padding:0">
+      <div class="brand-mark"><img src="assets/zenith-panel-logo.webp" alt="Zenith Panel logo"></div>
+      <div class="brand-text"><b>Zenith Panel</b><span>Server Control</span></div>
+    </div>
+    <div>
+      <h2>Minecraft hosting,<br>without the noise.</h2>
+      <p>A Node.js control panel for your own machines. Spin up Paper, Fabric or Forge servers,
+         install plugins straight from Modrinth, expose them with playit.gg and watch the
+         console live - all from one dark, fast dashboard.</p>
+      <div class="feats">
+        <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 6.5"/></svg> Real-time console &amp; resource graphs</div>
+        <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 6.5"/></svg> One-click Modrinth plugins &amp; mods</div>
+        <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 6.5"/></svg> Free public tunnels via playit.gg</div>
+        <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 6.5"/></svg> Automated installs, backups &amp; schedules</div>
+      </div>
+    </div>
+    <div class="tiny dim">Zenith Panel &middot; Node.js backend &middot; self-hosted on your hardware</div>
+  </div>
+
+  <div class="auth-panel">
+    <div class="auth-card">
+      <div class="brand" style="display:none"></div>
+      <h2 id="authTitle">Sign in</h2>
+      <p class="muted tiny" id="authSub" style="margin-top:0">Welcome back. Enter your panel credentials.</p>
+
+      <div id="authAlert"></div>
+
+      <form id="loginForm" class="col" style="gap:13px;margin-top:18px">
+        <label class="field">Username or e-mail
+          <input type="text" name="username" autocomplete="username" placeholder="your username or e-mail" required>
+        </label>
+        <label class="field">Password
+          <input type="password" name="password" autocomplete="current-password" placeholder="••••••••" required>
+        </label>
+        <button class="btn primary block" type="submit" id="loginBtn">Sign in</button>
+      </form>
+
+      <form id="registerForm" class="col" style="gap:13px;margin-top:18px;display:none">
+        <label class="field">Username
+          <input type="text" name="username" autocomplete="username" placeholder="steve" required pattern="[a-zA-Z0-9_.-]{3,24}">
+        </label>
+        <label class="field">E-mail <span class="dim tiny">(optional)</span>
+          <input type="email" name="email" autocomplete="email" placeholder="you@example.com">
+        </label>
+        <label class="field">Password <span class="dim tiny">(min 8 characters)</span>
+          <input type="password" name="password" autocomplete="new-password" placeholder="••••••••" required minlength="8">
+        </label>
+        <button class="btn primary block" type="submit" id="registerBtn">Create account</button>
+      </form>
+
+      <div class="auth-oauth" id="oauthProviders" aria-live="polite"></div>
+      <div class="auth-switch" id="authSwitch"></div>
+      <div class="divider"></div>
+      <div class="tiny dim center" id="serverInfo">Connecting...</div>
+    </div>
+  </div>
+</div>
+<script src="js/app.js"></script>
+<script src="js/components.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>

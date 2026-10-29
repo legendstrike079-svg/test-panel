@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# ==========================================================================
+#  zenith - panel management CLI
+#    zenith start | stop | restart | status | logs | update
+#    zenith user add <name> <password> [role] | zenith user list
+#    zenith backup-db | zenith doctor | zenith version
+# ==========================================================================
+set -uo pipefail
+APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$APP_DIR" || exit 1
+SERVICE_NAME="zenith-panel"; PM2_APP_NAME="zenith-panel"
+G='\033[38;5;48m'; C='\033[38;5;51m'; Y='\033[38;5;220m'; R='\033[38;5;196m'; N='\033[0m'; B='\033[1m'
+SUDO=""; [ "$(id -u)" != "0" ] && command -v sudo >/dev/null 2>&1 && SUDO="sudo"
+run() { if [ -n "$SUDO" ]; then "$SUDO" "$@"; else "$@"; fi; }
+have_systemd_service() { command -v systemctl >/dev/null 2>&1 && systemctl list-unit-files 2>/dev/null | grep -q "^${SERVICE_NAME}.service"; }
+have_pm2() { command -v pm2 >/dev/null 2>&1 && pm2 describe "$PM2_APP_NAME" >/dev/null 2>&1; }
+
+case "${1:-help}" in
+  start)
+    if have_systemd_service; then run systemctl start "$SERVICE_NAME"; elif have_pm2; then pm2 start "$PM2_APP_NAME"; else
+      mkdir -p logs; nohup node server.js >> logs/panel.log 2>&1 & echo $! > logs/panel.pid; fi
+    echo -e "${G}OK${N} panel start requested";;
+  stop)
+    if have_systemd_service; then run systemctl stop "$SERVICE_NAME"; elif have_pm2; then pm2 stop "$PM2_APP_NAME"; elif [ -f logs/panel.pid ]; then kill "$(cat logs/panel.pid)"; rm -f logs/panel.pid; fi
+    echo -e "${G}OK${N} panel stop requested";;
+  restart)
+    if have_systemd_service; then run systemctl restart "$SERVICE_NAME"; elif have_pm2; then pm2 restart "$PM2_APP_NAME"; elif [ -f logs/panel.pid ]; then kill "$(cat logs/panel.pid)"; sleep 1; nohup node server.js >> logs/panel.log 2>&1 & echo $! > logs/panel.pid; fi
+    echo -e "${G}OK${N} panel restarted";;
+  status)
+    PORT="$(grep -E '^PORT=' .env 2>/dev/null | cut -d= -f2 | tr -d '"')"; PORT="${PORT:-8080}"
+    if have_systemd_service; then systemctl status "$SERVICE_NAME" --no-pager | head -12
+    elif have_pm2; then pm2 status "$PM2_APP_NAME"
+    else echo "Running as a plain process (pid file: logs/panel.pid)"; fi
+    echo -e "\n${B}Health${N}: $(curl -fsS "http://127.0.0.1:${PORT}/api/version" 2>/dev/null || echo 'not responding')"
+    echo -e "${B}Servers running${N}: $(pgrep -fc 'java .*server.jar' 2>/dev/null || echo 0)";;
+  logs)
+    if have_systemd_service; then run journalctl -u "$SERVICE_NAME" -f -n 100; elif have_pm2; then pm2 logs "$PM2_APP_NAME"; else tail -f logs/panel.log; fi;;
+  update) bash install.sh --update;;
+  user)
+    shift
+    if [ "${1:-list}" = "add" ]; then node scripts/createuser.js --user "${2:?usage: zenith user add <name> <password> [role]}" --pass "${3:?}" --role "${4:-user}"
+    else node scripts/createuser.js --list; fi;;
+  backup-db)
+    STAMP="$(date +%Y%m%d-%H%M%S)"; mkdir -p backups/db
+    tar -czf "backups/db/db-$STAMP.tar.gz" data/db.json 2>/dev/null && echo -e "${G}OK${N} backups/db/db-$STAMP.tar.gz" || echo -e "${R}XX${N} nothing to back up yet";;
+  doctor)
+    echo -e "${B}Zenith doctor${N}"
+    echo "  node     : $(node -v 2>/dev/null || echo missing)"
+    echo "  npm      : $(npm -v 2>/dev/null || echo missing)"
+    echo "  java     : $(java -version 2>&1 | head -1 || echo 'missing (panel can download JREs)')"
+    echo "  zip/unzip: $(command -v zip >/dev/null && echo yes || echo 'no (built-in archiver used)')"
+    echo "  disk     : $(df -h . | awk 'NR==2{print $4" free of "$2}')"
+    echo "  memory   : $(free -m 2>/dev/null | awk 'NR==2{print $7" MB available"}' || echo unknown)"
+    echo "  deps     : $([ -d node_modules ] && echo installed || echo 'missing - run npm install')"
+    echo "  .env     : $([ -f .env ] && echo present || echo 'MISSING - run install.sh')"
+    echo "  data     : $(du -sh data servers backups 2>/dev/null | tr '\n' ' ')"
+    echo "  ports    : $(ss -ltnp 2>/dev/null | grep -c java || echo 0) game port(s) listening";;
+  version) curl -fsS "http://127.0.0.1:$(grep -E '^PORT=' .env 2>/dev/null | cut -d= -f2 | tr -d '"' || echo 8080)/api/version" 2>/dev/null || node -e "console.log(require('./package.json').version)";;
+  *)
+    sed -n '2,7p' "$0" | sed 's/^#//';;
+esac

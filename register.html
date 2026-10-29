@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zenith Panel - Create account</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23101014'/><text x='16' y='22' font-size='18' font-family='Arial' font-weight='700' fill='%23fff' text-anchor='middle'>Z</text></svg>">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="auth-wrap">
+  <div class="auth-art">
+    <div class="grid-lines"></div>
+    <div class="brand" style="padding:0">
+      <div class="brand-mark"><img src="assets/zenith-panel-logo.webp" alt="Zenith Panel logo"></div>
+      <div class="brand-text"><b>Zenith Panel</b><span>Server Control</span></div>
+    </div>
+    <div>
+      <h2>Create your account.</h2>
+      <p>Registration is open on this panel. You get your own dashboard, your own servers and
+         the same one-click Modrinth, backup and tunnel tools as the owner - scoped to the
+         servers you are allowed to touch.</p>
+      <div class="feats">
+        <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 6.5"/></svg> Live console, files, SFTP and world tools</div>
+        <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 6.5"/></svg> Install plugins &amp; mods from Modrinth</div>
+        <div class="feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12.5l5 5L20 6.5"/></svg> Schedules, backups and playit.gg tunnels</div>
+      </div>
+    </div>
+    <div class="tiny dim">Zenith Panel &middot; Node.js backend &middot; self-hosted on your hardware</div>
+  </div>
+
+  <div class="auth-panel">
+    <div class="auth-card">
+      <h2>Create account</h2>
+      <p class="muted tiny" style="margin-top:0" id="registerSub">Pick a username and a password with at least 8 characters.</p>
+      <div id="authAlert"></div>
+      <form id="registerForm" class="col" style="gap:13px;margin-top:18px">
+        <label class="field">Username
+          <input type="text" name="username" autocomplete="username" placeholder="steve" required pattern="[a-zA-Z0-9_.-]{3,24}">
+        </label>
+        <label class="field">E-mail <span class="dim tiny">(optional - used for password resets by an admin)</span>
+          <input type="email" name="email" autocomplete="email" placeholder="you@example.com">
+        </label>
+        <label class="field">Password <span class="dim tiny">(min 8 characters)</span>
+          <input type="password" name="password" autocomplete="new-password" placeholder="••••••••" required minlength="8">
+        </label>
+        <label class="field">Repeat password
+          <input type="password" name="password2" autocomplete="new-password" placeholder="••••••••" required minlength="8">
+        </label>
+        <button class="btn primary block" type="submit" id="registerBtn">Create account</button>
+      </form>
+      <div class="auth-oauth" id="oauthProviders" aria-live="polite"></div>
+      <div class="auth-switch">Already registered? <a href="index.html">Sign in</a></div>
+      <div class="divider"></div>
+      <div class="tiny dim center" id="serverInfo">Checking whether registration is open...</div>
+    </div>
+  </div>
+</div>
+<script src="js/app.js"></script>
+<script src="js/components.js"></script>
+<script src="js/register.js"></script>
+</body>
+</html>

@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zenith Panel - theme preview</title>
+<style>
+/* ==========================================================================
+   Zenith Panel - design system
+   Dark, high-contrast, "control room" aesthetic: near-black surfaces, hairline
+   borders, mono for anything numeric, white primary actions.
+   (Layout/pages inspired by the JTG panel; all code original.)
+   ========================================================================== */
+
+:root {
+  --bg: #030305;
+  --bg-elevated: #08080b;
+  --card: #0a0a0d;
+  --card-hover: #101014;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --line-subtle: rgba(255, 255, 255, 0.05);
+  --fg: #ffffff;
+  --fg-muted: #e4e4e7;
+  --fg-dim: #a1a1aa;
+  --fg-faint: #6b6b74;
+  --accent: #ffffff;
+  --green: #3ddc84;
+  --green-dim: rgba(61, 220, 132, 0.14);
+  --yellow: #ffce4d;
+  --yellow-dim: rgba(255, 206, 77, 0.14);
+  --red: #ff5d5d;
+  --red-dim: rgba(255, 93, 93, 0.14);
+  --blue: #5aa9ff;
+  --blue-dim: rgba(90, 169, 255, 0.14);
+  --violet: #a78bfa;
+  --radius: 14px;
+  --radius-sm: 9px;
+  --shadow: 0 18px 50px -22px rgba(0, 0, 0, 0.9);
+  --sidebar-w: 254px;
+  --font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "JetBrains Mono", "IBM Plex Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --display: "Chakra Petch", var(--font);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+html { scrollbar-color: #2a2a30 transparent; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+::selection { background: rgba(167, 139, 250, 0.32); }
+
+/* ambient background */
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(900px 500px at 12% -10%, rgba(90, 169, 255, 0.07), transparent 60%),
+    radial-gradient(800px 480px at 100% 0%, rgba(167, 139, 250, 0.08), transparent 55%),
+    linear-gradient(rgba(255, 255, 255, 0.016) 1px, transparent 1px) 0 0 / 100% 44px;
+}
+
+/* ------------------------------- scrollbars ------------------------------- */
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #26262c; border-radius: 8px; border: 2px solid transparent; background-clip: content-box; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a44; background-clip: content-box; }
+
+/* ================================ layout ================================ */
+.shell { display: flex; min-height: 100vh; }
+.sidebar {
+  width: var(--sidebar-w); flex: 0 0 var(--sidebar-w);
+  border-right: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent 30%), var(--bg-elevated);
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column; z-index: 40;
+}
+.brand { display: flex; align-items: center; gap: 11px; padding: 18px 18px 14px; }
+.brand-mark {
+  width: 34px; height: 34px; border-radius: 10px; flex: 0 0 34px;
+  background: linear-gradient(140deg, #ffffff 0%, #b9b9c6 55%, #6f6f80 100%);
+  color: #06060a; display: grid; place-items: center; font-weight: 800; font-size: 16px;
+  font-family: var(--display); letter-spacing: -0.5px;
+  box-shadow: 0 6px 20px -8px rgba(255,255,255,0.45);
+}
+.brand-text { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+.brand-text b { font-family: var(--display); font-size: 15px; letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.brand-text span { font-size: 10.5px; color: var(--fg-faint); letter-spacing: 1.6px; text-transform: uppercase; }
+
+.nav { padding: 8px 10px; display: flex; flex-direction: column; gap: 3px; overflow-y: auto; flex: 1; }
+.nav-section { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--fg-faint); padding: 14px 10px 6px; }
+.nav a {
+  display: flex; align-items: center; gap: 11px; padding: 9px 11px; border-radius: var(--radius-sm);
+  color: var(--fg-dim); font-size: 13.5px; transition: background .16s ease, color .16s ease, transform .16s ease;
+  border: 1px solid transparent;
+}
+.nav a:hover { background: rgba(255,255,255,0.045); color: var(--fg); }
+.nav a.active { background: rgba(255,255,255,0.075); color: var(--fg); border-color: var(--line); }
+.nav a.active svg { color: #fff; }
+.nav a svg { width: 17px; height: 17px; flex: 0 0 17px; color: var(--fg-faint); }
+.nav a .pill { margin-left: auto; font-size: 10px; padding: 1px 6px; border-radius: 20px; background: rgba(255,255,255,0.08); color: var(--fg-dim); }
+.nav-foot { border-top: 1px solid var(--line); padding: 12px; }
+.user-chip { display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: var(--radius-sm); transition: background .15s; }
+.user-chip:hover { background: rgba(255,255,255,0.05); }
+.avatar {
+  width: 32px; height: 32px; border-radius: 9px; flex: 0 0 32px; display: grid; place-items: center;
+  background: linear-gradient(140deg, #2b2b34, #16161b); border: 1px solid var(--line-strong);
+  font-weight: 700; font-size: 13px; text-transform: uppercase;
+}
+.user-chip .meta { min-width: 0; }
+.user-chip .meta b { display: block; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.user-chip .meta span { font-size: 11px; color: var(--fg-faint); text-transform: uppercase; letter-spacing: 0.8px; }
+
+.main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.topbar {
+  height: 61px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 14px;
+  padding: 0 22px; position: sticky; top: 0; z-index: 30;
+  background: rgba(3, 3, 5, 0.82); backdrop-filter: blur(14px);
+}
+.topbar h1 { font-size: 16px; margin: 0; font-weight: 600; letter-spacing: -0.2px; }
+.topbar .crumb { color: var(--fg-faint); font-size: 12.5px; font-family: var(--mono); }
+.topbar .spacer { flex: 1; }
+.content { padding: 22px; max-width: 1560px; width: 100%; }
+.page-actions { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; }
+
+.menu-btn { display: none; }
+@media (max-width: 980px) {
+  .sidebar { position: fixed; left: 0; top: 0; transform: translateX(-102%); transition: transform .22s ease; box-shadow: var(--shadow); }
+  .sidebar.open { transform: none; }
+  .menu-btn { display: inline-grid; }
+  .content { padding: 16px; }
+}
+
+/* ================================ type ================================ */
+h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -0.2px; }
+h2 { font-size: 18px; margin: 0 0 4px; }
+h3 { font-size: 15px; margin: 0 0 10px; }
+.muted { color: var(--fg-dim); }
+.dim { color: var(--fg-faint); }
+.mono { font-family: var(--mono); font-size: 12.5px; }
+.tiny { font-size: 11.5px; }
+.center { text-align: center; }
+.row { display: flex; align-items: center; gap: 10px; }
+.row.between { justify-content: space-between; }
+.row.wrap { flex-wrap: wrap; }
+.col { display: flex; flex-direction: column; gap: 10px; }
+.grow { flex: 1; min-width: 0; }
+.grid { display: grid; gap: 14px; }
+.grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.grid.cols-4 { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.stack { display: flex; flex-direction: column; gap: 14px; }
+.mt { margin-top: 14px; } .mt-lg { margin-top: 22px; }
+.truncate { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ================================ card ================================ */
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.022), transparent 42%), var(--card);
+  border: 1px solid var(--line); border-radius: var(--radius); padding: 18px;
+  transition: border-color .18s ease, transform .18s ease, background .18s ease;
+}
+.card.hoverable:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+.card.flush { padding: 0; overflow: hidden; }
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 18px; border-bottom: 1px solid var(--line); }
+.card-head h3 { margin: 0; }
+.card-body { padding: 18px; }
+.stat { display: flex; flex-direction: column; gap: 10px; }
+.stat .label { font-size: 11px; letter-spacing: 1.3px; text-transform: uppercase; color: var(--fg-faint); }
+.stat .value { font-family: var(--display); font-size: 27px; font-weight: 700; letter-spacing: -0.6px; }
+.stat .value small { font-size: 13px; color: var(--fg-faint); font-weight: 500; margin-left: 4px; }
+.stat .foot { font-size: 12px; color: var(--fg-dim); display: flex; gap: 8px; align-items: center; }
+
+/* ================================ buttons ================================ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  padding: 8px 14px; border-radius: 10px; border: 1px solid var(--line-strong);
+  background: rgba(255,255,255,0.04); color: var(--fg-muted); cursor: pointer;
+  font-size: 13px; font-weight: 500; transition: all .16s ease; white-space: nowrap;
+}
+.btn:hover:not(:disabled) { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.3); }
+.btn:active:not(:disabled) { transform: translateY(1px); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn svg { width: 15px; height: 15px; }
+.btn.primary { background: #fff; color: #08080a; border-color: #fff; font-weight: 600; }
+.btn.primary:hover:not(:disabled) { background: #e6e6ea; border-color: #e6e6ea; }
+.btn.green { background: var(--green-dim); border-color: rgba(61,220,132,0.35); color: #86efac; }
+.btn.green:hover:not(:disabled) { background: rgba(61,220,132,0.24); color: #b6f7d0; }
+.btn.red { background: var(--red-dim); border-color: rgba(255,93,93,0.35); color: #ffa2a2; }
+.btn.red:hover:not(:disabled) { background: rgba(255,93,93,0.24); color: #ffc9c9; }
+.btn.yellow { background: var(--yellow-dim); border-color: rgba(255,206,77,0.32); color: #ffe08a; }
+.btn.ghost { background: transparent; border-color: transparent; color: var(--fg-dim); }
+.btn.ghost:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.btn.sm { padding: 5px 10px; font-size: 12px; border-radius: 8px; }
+.btn.icon { padding: 7px; border-radius: 9px; }
+.btn.block { width: 100%; }
+.btn-group { display: inline-flex; gap: 6px; }
+
+/* ================================ forms ================================ */
+label.field { display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: var(--fg-dim); }
+input[type=text], input[type=password], input[type=email], input[type=number], input[type=search], select, textarea {
+  background: #06060a; border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px;
+  outline: none; transition: border-color .15s ease, box-shadow .15s ease; width: 100%;
+}
+input:focus, select:focus, textarea:focus { border-color: rgba(255,255,255,0.4); box-shadow: 0 0 0 3px rgba(255,255,255,0.06); }
+input::placeholder, textarea::placeholder { color: #55555e; }
+select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, #6b6b74 50%), linear-gradient(135deg, #6b6b74 50%, transparent 50%); background-position: calc(100% - 17px) 50%, calc(100% - 12px) 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-right: 32px; }
+textarea { min-height: 120px; font-family: var(--mono); font-size: 12.5px; resize: vertical; line-height: 1.5; }
+input[type=range] { width: 100%; accent-color: #fff; }
+.hint { font-size: 11.5px; color: var(--fg-faint); }
+.checkbox { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; color: var(--fg-muted); cursor: pointer; }
+.checkbox input { accent-color: #fff; margin-top: 2px; }
+.field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+switch, .switch { display: inline-flex; align-items: center; gap: 9px; cursor: pointer; font-size: 13px; }
+.switch input { display: none; }
+.switch .track { width: 38px; height: 21px; border-radius: 20px; background: #1d1d23; border: 1px solid var(--line); position: relative; transition: background .18s; }
+.switch .track::after { content: ""; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; border-radius: 50%; background: #6b6b74; transition: transform .18s ease, background .18s; }
+.switch input:checked + .track { background: rgba(61,220,132,0.22); border-color: rgba(61,220,132,0.4); }
+.switch input:checked + .track::after { transform: translateX(17px); background: var(--green); }
+
+/* ================================ badges ================================ */
+.badge { display: inline-flex; align-items: center; gap: 6px; padding: 2.5px 9px; border-radius: 20px; font-size: 11.5px; font-weight: 500; border: 1px solid var(--line); background: rgba(255,255,255,0.04); color: var(--fg-dim); }
+.badge.green { color: #86efac; background: var(--green-dim); border-color: rgba(61,220,132,0.3); }
+.badge.yellow { color: #fde68a; background: var(--yellow-dim); border-color: rgba(255,206,77,0.3); }
+.badge.red { color: #fca5a5; background: var(--red-dim); border-color: rgba(255,93,93,0.3); }
+.badge.blue { color: #a5cfff; background: var(--blue-dim); border-color: rgba(90,169,255,0.3); }
+.badge.violet { color: #d6c8ff; background: rgba(167,139,250,0.14); border-color: rgba(167,139,250,0.3); }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--fg-faint); flex: 0 0 7px; }
+.dot.green { background: var(--green); box-shadow: 0 0 0 3px rgba(61,220,132,0.14); }
+.dot.yellow { background: var(--yellow); box-shadow: 0 0 0 3px rgba(255,206,77,0.14); animation: pulse 1.4s infinite; }
+.dot.red { background: var(--red); box-shadow: 0 0 0 3px rgba(255,93,93,0.14); }
+.dot.blue { background: var(--blue); box-shadow: 0 0 0 3px rgba(90,169,255,0.14); animation: pulse 1.6s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+
+/* ================================ bars ================================ */
+.bar { height: 6px; border-radius: 20px; background: rgba(255,255,255,0.07); overflow: hidden; }
+.bar > i { display: block; height: 100%; border-radius: 20px; background: #fff; transition: width .5s cubic-bezier(.22,1,.36,1); }
+.bar.green > i { background: linear-gradient(90deg, #2ec574, var(--green)); }
+.bar.yellow > i { background: linear-gradient(90deg, #e0a92b, var(--yellow)); }
+.bar.red > i { background: linear-gradient(90deg, #e04a4a, var(--red)); }
+.bar.blue > i { background: linear-gradient(90deg, #3b83d6, var(--blue)); }
+
+/* ================================ table ================================ */
+table.data { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.data th { text-align: left; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--fg-faint); font-weight: 500; padding: 10px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+table.data td { padding: 12px 14px; border-bottom: 1px solid var(--line-subtle); vertical-align: middle; }
+table.data tr:last-child td { border-bottom: none; }
+table.data tbody tr { transition: background .14s; }
+table.data tbody tr:hover { background: rgba(255,255,255,0.024); }
+.table-wrap { overflow-x: auto; }
+
+/* ================================ terminal ================================ */
+.terminal {
+  background: #05050a; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  display: flex; flex-direction: column; min-height: 300px;
+}
+.terminal-head { display: flex; align-items: center; gap: 10px; padding: 9px 13px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.02); }
+.terminal-head .lights { display: flex; gap: 6px; }
+.terminal-head .lights i { width: 10px; height: 10px; border-radius: 50%; background: #2a2a33; display: block; }
+.terminal-head .lights i:nth-child(1) { background: #ff5f57; }
+.terminal-head .lights i:nth-child(2) { background: #febc2e; }
+.terminal-head .lights i:nth-child(3) { background: #28c840; }
+.terminal-body {
+  font-family: var(--mono); font-size: 12.4px; line-height: 1.6; padding: 12px 14px; overflow-y: auto;
+  white-space: pre-wrap; word-break: break-word; flex: 1; height: 100%; min-height: 240px; max-height: 62vh;
+  color: #cfd3dc; background:
+    linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px) 0 0 / 100% 22px, #05050a;
+}
+.terminal-body .l { display: block; animation: lineIn .2s ease both; }
+.terminal-body .l.info { color: #9fb4cc; }
+.terminal-body .l.warn, .terminal-body .l.warning { color: var(--yellow); }
+.terminal-body .l.error, .terminal-body .l.severe { color: #ff8080; }
+.terminal-body .l.join { color: var(--green); }
+.terminal-body .l.leave { color: #ffb37a; }
+.terminal-body .l.cmd { color: #fff; font-weight: 600; }
+.terminal-body .l.panel { color: var(--violet); }
+@keyframes lineIn { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: none; } }
+.console-input { display: flex; gap: 9px; padding: 10px 12px; border-top: 1px solid var(--line); background: rgba(255,255,255,0.02); }
+.console-input input { font-family: var(--mono); background: #030307; }
+
+/* ================================ tabs ================================ */
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; padding-bottom: 1px; }
+.tabs button {
+  background: none; border: none; padding: 10px 14px; color: var(--fg-dim); cursor: pointer; font-size: 13.5px;
+  border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .15s, border-color .15s; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.tabs button:hover { color: var(--fg); }
+.tabs button.active { color: #fff; border-bottom-color: #fff; }
+.tabs button svg { width: 15px; height: 15px; }
+.tab-panel { display: none; animation: fadeUp .28s ease both; }
+.tab-panel.active { display: block; }
+
+/* ================================ modal ================================ */
+.overlay {
+  position: fixed; inset: 0; background: rgba(2, 2, 4, 0.72); backdrop-filter: blur(7px);
+  display: none; align-items: center; justify-content: center; z-index: 100; padding: 18px;
+}
+.overlay.open { display: flex; animation: fadeIn .16s ease both; }
+.modal {
+  background: var(--card); border: 1px solid var(--line-strong); border-radius: 16px; width: min(620px, 100%);
+  max-height: 90vh; display: flex; flex-direction: column; box-shadow: var(--shadow); animation: fadeUp .22s cubic-bezier(.22,1,.36,1) both;
+}
+.modal.wide { width: min(920px, 100%); }
+.modal.narrow { width: min(440px, 100%); }
+.modal-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.modal-head h3 { margin: 0; }
+.modal-body { padding: 20px; overflow-y: auto; }
+.modal-foot { display: flex; justify-content: flex-end; gap: 9px; padding: 15px 20px; border-top: 1px solid var(--line); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px) scale(.985); } to { opacity: 1; transform: none; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ================================ toasts ================================ */
+.toasts { position: fixed; bottom: 18px; right: 18px; display: flex; flex-direction: column; gap: 9px; z-index: 200; max-width: min(380px, 92vw); }
+.toast {
+  background: var(--card); border: 1px solid var(--line-strong); border-left: 3px solid var(--blue);
+  border-radius: 11px; padding: 11px 14px; box-shadow: var(--shadow); animation: toastIn .22s cubic-bezier(.22,1,.36,1) both;
+  font-size: 13px; display: flex; gap: 10px; align-items: flex-start;
+}
+.toast.success { border-left-color: var(--green); }
+.toast.error { border-left-color: var(--red); }
+.toast.warn { border-left-color: var(--yellow); }
+.toast b { display: block; margin-bottom: 2px; }
+.toast .close { margin-left: auto; cursor: pointer; color: var(--fg-faint); }
+@keyframes toastIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+
+/* ================================ misc ================================ */
+.empty { padding: 40px 20px; text-align: center; color: var(--fg-faint); display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.empty svg { width: 30px; height: 30px; opacity: .5; }
+.spinner {
+  width: 15px; height: 15px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.16); border-top-color: #fff;
+  animation: spin .7s linear infinite; display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.skeleton { background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.09), rgba(255,255,255,0.04)); background-size: 200% 100%; animation: shimmer 1.3s infinite; border-radius: 8px; }
+@keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+.divider { height: 1px; background: var(--line); margin: 16px 0; }
+.kv { display: grid; grid-template-columns: minmax(120px, 34%) 1fr; gap: 8px 14px; font-size: 13px; }
+.kv dt { color: var(--fg-faint); }
+.kv dd { margin: 0; font-family: var(--mono); font-size: 12.5px; word-break: break-word; }
+.code {
+  font-family: var(--mono); font-size: 12px; background: #06060a; border: 1px solid var(--line);
+  border-radius: 9px; padding: 10px 12px; overflow-x: auto; white-space: pre; color: #c6ccd8;
+}
+.copy-box { display: flex; gap: 8px; align-items: stretch; }
+.copy-box .code { flex: 1; }
+.banner-note { display: flex; gap: 11px; align-items: flex-start; padding: 13px 15px; border-radius: var(--radius-sm); border: 1px solid var(--line); background: rgba(255,255,255,0.03); font-size: 13px; }
+.banner-note.green { border-color: rgba(61,220,132,0.28); background: var(--green-dim); }
+.banner-note.yellow { border-color: rgba(255,206,77,0.28); background: var(--yellow-dim); }
+.banner-note.red { border-color: rgba(255,93,93,0.28); background: var(--red-dim); }
+.banner-note svg { width: 17px; height: 17px; flex: 0 0 17px; margin-top: 1px; }
+.enter { animation: fadeUp .4s cubic-bezier(.22,1,.36,1) both; }
+.stagger > * { animation: fadeUp .42s cubic-bezier(.22,1,.36,1) both; }
+.stagger > *:nth-child(1) { animation-delay: .02s; }
+.stagger > *:nth-child(2) { animation-delay: .06s; }
+.stagger > *:nth-child(3) { animation-delay: .1s; }
+.stagger > *:nth-child(4) { animation-delay: .14s; }
+.stagger > *:nth-child(5) { animation-delay: .18s; }
+.stagger > *:nth-child(6) { animation-delay: .22s; }
+.stagger > *:nth-child(7) { animation-delay: .26s; }
+.stagger > *:nth-child(8) { animation-delay: .3s; }
+
+/* progress ring */
+.ring { --p: 0; width: 74px; height: 74px; position: relative; flex: 0 0 74px; }
+.ring svg { transform: rotate(-90deg); width: 74px; height: 74px; }
+.ring circle { fill: none; stroke-width: 6; }
+.ring .bg { stroke: rgba(255,255,255,0.08); }
+.ring .fg { stroke: #fff; stroke-linecap: round; stroke-dasharray: 201; stroke-dashoffset: calc(201 - (201 * var(--p) / 100)); transition: stroke-dashoffset .6s cubic-bezier(.22,1,.36,1); }
+.ring .label { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--display); font-size: 15px; font-weight: 700; }
+
+/* server card */
+.server-card { display: flex; flex-direction: column; gap: 13px; }
+.server-card .head { display: flex; align-items: flex-start; gap: 12px; }
+.server-icon {
+  width: 42px; height: 42px; border-radius: 11px; flex: 0 0 42px; display: grid; place-items: center;
+  background: linear-gradient(140deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02)); border: 1px solid var(--line);
+  font-family: var(--display); font-weight: 700;
+}
+.server-card .title { font-weight: 600; font-size: 14.5px; }
+.power-row { display: flex; gap: 7px; }
+.power-row .btn { flex: 1; }
+
+/* plugin cards */
+.plugin-card { display: flex; gap: 13px; align-items: flex-start; }
+.plugin-icon { width: 46px; height: 46px; border-radius: 10px; flex: 0 0 46px; object-fit: cover; background: #101014; border: 1px solid var(--line); }
+.plugin-card .desc { font-size: 12.5px; color: var(--fg-dim); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { font-size: 11px; padding: 1.5px 8px; border-radius: 20px; border: 1px solid var(--line); color: var(--fg-dim); background: rgba(255,255,255,0.03); }
+
+/* file browser */
+.files-toolbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.crumbs { font-family: var(--mono); font-size: 12.5px; display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
+.crumbs a { color: var(--blue); cursor: pointer; }
+.crumbs a:hover { text-decoration: underline; }
+.dropzone { border: 1.5px dashed var(--line-strong); border-radius: var(--radius); padding: 16px; text-align: center; color: var(--fg-dim); font-size: 13px; transition: all .18s; }
+.dropzone.over { border-color: #fff; background: rgba(255,255,255,0.05); color: #fff; }
+
+/* player list */
+.player-pill { display: inline-flex; align-items: center; gap: 7px; padding: 4px 10px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid var(--line); font-size: 12.5px; }
+.player-pill img { width: 18px; height: 18px; border-radius: 4px; image-rendering: pixelated; }
+
+/* login page */
+.auth-wrap { min-height: 100vh; display: grid; grid-template-columns: 1.05fr 0.95fr; }
+.auth-art {
+  position: relative; overflow: hidden; border-right: 1px solid var(--line);
+  background: radial-gradient(700px 500px at 30% 20%, rgba(90,169,255,0.13), transparent 62%), radial-gradient(600px 460px at 80% 90%, rgba(167,139,250,0.13), transparent 60%), #05050a;
+  display: flex; flex-direction: column; justify-content: space-between; padding: 38px;
+}
+.auth-art .grid-lines { position: absolute; inset: -40%; background: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px) 0 0 / 100% 34px, linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px) 0 0 / 34px 100%; transform: perspective(600px) rotateX(58deg); animation: gridScroll 14s linear infinite; opacity: .5; }
+@keyframes gridScroll { to { transform: perspective(600px) rotateX(58deg) translateY(34px); } }
+.auth-art h2 { font-size: 40px; line-height: 1.05; margin: 0 0 14px; letter-spacing: -1.2px; position: relative; }
+.auth-art p { color: var(--fg-dim); max-width: 46ch; position: relative; }
+.auth-art .feats { position: relative; display: flex; flex-direction: column; gap: 10px; margin-top: 26px; }
+.auth-art .feat { display: flex; gap: 10px; align-items: center; font-size: 13.5px; color: var(--fg-muted); }
+.auth-art .feat svg { width: 16px; height: 16px; color: var(--green); }
+.auth-panel { display: grid; place-items: center; padding: 34px 22px; }
+.auth-card { width: min(400px, 100%); }
+.auth-card .brand { padding: 0 0 20px; }
+.auth-switch { text-align: center; font-size: 13px; color: var(--fg-dim); margin-top: 16px; }
+.auth-switch a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 900px) { .auth-wrap { grid-template-columns: 1fr; } .auth-art { display: none; } }
+
+/* wizard */
+.steps { display: flex; gap: 8px; margin-bottom: 18px; }
+.steps .s { flex: 1; height: 3px; border-radius: 4px; background: rgba(255,255,255,0.1); }
+.steps .s.active { background: #fff; }
+.steps .s.done { background: var(--green); }
+.pick-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.pick { border: 1px solid var(--line); background: rgba(255,255,255,0.02); border-radius: 11px; padding: 12px; cursor: pointer; transition: all .16s; }
+.pick:hover { border-color: var(--line-strong); background: rgba(255,255,255,0.05); }
+.pick.active { border-color: #fff; background: rgba(255,255,255,0.09); }
+.pick b { display: block; font-size: 13.5px; margin-bottom: 3px; }
+.pick span { font-size: 11.5px; color: var(--fg-faint); display: block; line-height: 1.4; }
+
+/* ---------------------------- player list + skins ---------------------------- */
+.phead { position: relative; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+  border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--line); overflow: hidden; }
+.phead img { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; display: block; }
+.phead.online { border-color: rgba(61,220,132,0.45); box-shadow: 0 0 0 3px var(--green-dim); }
+.phead .ph-fallback { display: none; font-style: normal; font-weight: 700; font-size: 15px; color: var(--fg-dim); }
+.phead.fallback img { display: none; }
+.phead.fallback .ph-fallback { display: block; }
+.phead.fallback { background: linear-gradient(160deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03)); }
+
+.plist { display: flex; flex-direction: column; gap: 8px; }
+.player-row { display: flex; align-items: center; gap: 11px; padding: 9px 11px; border: 1px solid var(--line);
+  border-radius: var(--radius-sm); background: rgba(255,255,255,0.02); flex-wrap: wrap; }
+.player-row:hover { background: rgba(255,255,255,0.04); }
+.player-row .phead img { padding: 1px; }
+@media (max-width: 720px) { .pact-label { display: none; } }
+
+/* ---------------------------- charts ---------------------------- */
+.chart-box { position: relative; width: 100%; }
+.chart { width: 100%; height: 100%; display: block; overflow: visible; }
+.chart-line { fill: none; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linejoin: round; stroke-linecap: round; }
+.chart-fill { stroke: none; opacity: .16; }
+.chart-grid line { stroke: rgba(255,255,255,0.06); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.chart-dot { stroke: #05050a; stroke-width: 2; }
+.chart.spark { height: 30px; }
+.chart-axis { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between;
+  font-size: 10px; color: var(--fg-faint); font-family: var(--mono); pointer-events: none; }
+.chart-axis span { background: rgba(3,3,5,0.72); padding: 0 3px; border-radius: 4px; align-self: flex-start; }
+.chart-mini { display: flex; justify-content: space-between; font-size: 10px; color: var(--fg-faint);
+  font-family: var(--mono); margin-top: 4px; }
+.chart-empty { padding: 12px 0; }
+
+.donut-wrap { position: relative; flex: 0 0 auto; }
+.donut { width: 100%; height: 100%; transform: rotate(-90deg); }
+.donut-track { fill: none; stroke: rgba(255,255,255,0.06); }
+.donut-arc { fill: none; stroke-linecap: butt; }
+.donut-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; text-align: center; pointer-events: none; }
+.donut-center b { font-family: var(--display); font-size: 19px; }
+.donut-center span { font-size: 10.5px; color: var(--fg-faint); text-transform: uppercase; letter-spacing: .06em; }
+.legend { display: flex; flex-direction: column; gap: 7px; min-width: 140px; }
+.legend-row { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--fg-dim); }
+.legend-row i { width: 9px; height: 9px; border-radius: 3px; flex: 0 0 auto; }
+.legend-row b { color: var(--fg); font-family: var(--mono); font-size: 12px; }
+
+/* ---------------------------- misc cards ---------------------------- */
+.card.inset { background: rgba(255,255,255,0.025); box-shadow: none; }
+.stat-row { display: flex; align-items: baseline; gap: 8px; }
+.stat-row b { font-family: var(--display); font-size: 24px; }
+.kv { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; padding: 5px 0; border-bottom: 1px solid var(--line-subtle); }
+.kv:last-child { border-bottom: 0; }
+.kv span:first-child { color: var(--fg-dim); }
+.kv b { font-family: var(--mono); font-weight: 500; }
+.alloc-grid { display: grid; gap: 4px; grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)); }
+.alloc-port { font-family: var(--mono); font-size: 11.5px; text-align: center; padding: 5px 2px; border-radius: 6px;
+  border: 1px solid var(--line); color: var(--fg-faint); background: rgba(255,255,255,0.015); }
+.alloc-port.used { color: var(--fg); border-color: rgba(90,169,255,0.4); background: var(--blue-dim); }
+.alloc-port.free { color: var(--fg-dim); }
+.dns-record { font-family: var(--mono); font-size: 12px; background: rgba(255,255,255,0.035); border: 1px solid var(--line);
+  border-radius: 8px; padding: 7px 10px; margin-top: 6px; word-break: break-all; }
+.bot-log { font-family: var(--mono); font-size: 11.5px; max-height: 190px; overflow: auto; }
+.bot-log div { padding: 2px 0; color: var(--fg-dim); }
+.bot-log .err { color: var(--red); }
+.bot-log .ok { color: var(--green); }
+.bot-log .warn { color: var(--yellow); }
+.cmd-ref { display: grid; gap: 6px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.cmd-ref div { font-size: 12.5px; padding: 7px 9px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,0.02); }
+.cmd-ref code { color: var(--green); font-family: var(--mono); }
+
+/* split layouts (dashboard / analytics) */
+.dash-split { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr) 360px; align-items: start; }
+.dash-split.wide-right { grid-template-columns: minmax(0, 1fr) 420px; }
+@media (max-width: 1150px) { .dash-split, .dash-split.wide-right { grid-template-columns: 1fr; } }
+.stat-inline { display: flex; gap: 18px; flex-wrap: wrap; }
+.stat-inline > div { min-width: 96px; }
+.stat-inline b { font-family: var(--display); font-size: 22px; }
+
+/* node health check list */
+.dot-check { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; }
+.dot-check svg { width: 12px; height: 12px; }
+.dot-check.green { background: rgba(61, 220, 132, .14); color: var(--green); }
+.dot-check.red { background: rgba(255, 93, 93, .14); color: var(--red); }
+.banner-note.green { border-color: rgba(61, 220, 132, .35); background: rgba(61, 220, 132, .07); }
+.red-t { color: var(--red); }
+
+/* ==========================================================================
+   Icon rail (server page) - the app sidebar collapses to icons only and the
+   server's own tabs are pinned underneath it, like the Nook theme's rail.
+   ========================================================================== */
+.shell.rail .sidebar { width: 76px; flex: 0 0 76px; }
+.shell.rail .brand { padding: 16px 0 12px; justify-content: center; }
+.shell.rail .brand-text { display: none; }
+.shell.rail .nav { padding: 6px 0 10px; align-items: center; gap: 4px; }
+.shell.rail .nav-section { display: none; }
+.shell.rail .nav a { width: 48px; height: 44px; padding: 0; justify-content: center; position: relative; }
+.shell.rail .nav a > span, .shell.rail .nav a .pill { display: none; }
+.shell.rail .nav a svg { width: 19px; height: 19px; }
+.shell.rail .nav a.active { background: var(--green-dim); border-color: rgba(61, 220, 132, 0.3); color: var(--green); }
+.shell.rail .nav a.active svg { color: var(--green); }
+.shell.rail .nav-foot { padding: 10px 0; display: flex; justify-content: center; }
+.shell.rail .user-chip { padding: 0; }
+.shell.rail .user-chip .meta, .shell.rail .user-chip > span { display: none; }
+.shell.rail .content { max-width: 1780px; }
+.rail-split { display: flex; flex-direction: column; gap: 4px; align-items: center; width: 100%;
+  border-top: 1px solid var(--line); margin-top: 8px; padding: 10px 0 4px; overflow-y: auto; }
+#serverTabs.rail-tabs { flex-direction: column; gap: 4px; border-bottom: 0; width: 100%; align-items: center; padding: 0; }
+#serverTabs.rail-tabs button {
+  width: 48px; height: 44px; padding: 0; justify-content: center; border: 1px solid transparent; border-radius: var(--radius-sm);
+  margin: 0; position: relative;
+}
+#serverTabs.rail-tabs button svg { width: 19px; height: 19px; }
+#serverTabs.rail-tabs button span { display: none; }
+#serverTabs.rail-tabs button.active { background: var(--green-dim); border-color: rgba(61, 220, 132, 0.3); color: var(--green); }
+#serverTabs.rail-tabs button.active svg { color: var(--green); }
+#serverTabs.rail-tabs button:hover { background: rgba(255, 255, 255, 0.05); color: var(--fg); }
+.rail-divider { width: 30px; height: 1px; background: var(--line); margin: 6px 0; }
+
+/* ==========================================================================
+   Server cards (grid) - banner, status pill and metric tiles.
+   ========================================================================== */
+.view-toggle { display: flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 10px; background: rgba(255,255,255,0.02); }
+.view-toggle button { width: 30px; height: 26px; display: grid; place-items: center; background: none; border: 0; border-radius: 7px; color: var(--fg-faint); cursor: pointer; }
+.view-toggle button:hover { color: var(--fg); background: rgba(255,255,255,0.05); }
+.view-toggle button.active { color: #06060a; background: #fff; }
+.view-toggle button svg { width: 15px; height: 15px; }
+
+#serverGrid.cards-2 { grid-template-columns: repeat(auto-fill, minmax(430px, 1fr)); }
+#serverGrid.cards-3 { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+#serverGrid.cards-1 { grid-template-columns: 1fr; }
+
+.srv-card { padding: 0; gap: 0; overflow: hidden; display: flex; flex-direction: column; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.srv-card:hover { transform: translateY(-2px); border-color: var(--line-strong); box-shadow: var(--shadow); }
+.srv-banner { position: relative; height: 132px; border-bottom: 1px solid var(--line); overflow: hidden; background: #0d0f16; }
+.srv-banner .art { position: absolute; inset: 0; }
+.srv-banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4,5,10,0.05) 0%, rgba(4,5,10,0.35) 45%, rgba(4,5,10,0.88) 100%); }
+.srv-banner .banner-title { position: absolute; left: 16px; bottom: 12px; z-index: 2; max-width: 65%; }
+.srv-banner .banner-title b { font-family: var(--display); font-size: 19px; font-weight: 700; display: block;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.75); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.srv-banner .banner-title span { font-size: 11.5px; color: rgba(255,255,255,0.72); font-family: var(--mono); }
+.srv-pill { position: absolute; right: 12px; top: 12px; z-index: 3; display: inline-flex; align-items: center; gap: 7px;
+  padding: 4px 11px 4px 9px; border-radius: 20px; font-size: 11.5px; font-weight: 600; letter-spacing: .2px;
+  background: rgba(6, 7, 12, 0.76); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(6px); }
+.srv-pill i { width: 7px; height: 7px; border-radius: 50%; background: var(--fg-faint); box-shadow: 0 0 0 3px rgba(255,255,255,0.06); }
+.srv-pill.running { color: #7ff0b0; } .srv-pill.running i { background: var(--green); box-shadow: 0 0 0 3px rgba(61,220,132,0.18); animation: pulse 2.4s ease-in-out infinite; }
+.srv-pill.starting, .srv-pill.installing, .srv-pill.stopping { color: #ffd97a; } .srv-pill.starting i, .srv-pill.installing i, .srv-pill.stopping i { background: var(--yellow); box-shadow: 0 0 0 3px rgba(255,206,77,0.18); animation: pulse 1.4s ease-in-out infinite; }
+.srv-pill.offline, .srv-pill.crashed, .srv-pill.suspended { color: #ff9a9a; } .srv-pill.offline i { background: #ff5d5d; box-shadow: 0 0 0 3px rgba(255,93,93,0.16); } .srv-pill.crashed i { background: var(--red); }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+.srv-type { position: absolute; left: 13px; top: 12px; z-index: 3; display: inline-flex; align-items: center; gap: 7px;
+  padding: 4px 10px; border-radius: 8px; font-size: 11px; font-family: var(--mono); letter-spacing: .4px;
+  background: rgba(6, 7, 12, 0.66); border: 1px solid rgba(255,255,255,0.1); }
+.srv-type .dot { width: 8px; height: 8px; border-radius: 2px; }
+
+.srv-body { padding: 13px 14px 14px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.srv-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.srv-tile { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; background: rgba(255,255,255,0.022); min-width: 0; }
+.srv-tile .k { display: flex; align-items: center; gap: 6px; font-size: 10.5px; text-transform: uppercase; letter-spacing: .8px; color: var(--fg-faint); }
+.srv-tile .k svg { width: 12px; height: 12px; }
+.srv-tile .v { font-family: var(--mono); font-size: 13px; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.srv-tile.warn .v { color: var(--red); }
+.srv-tile.blue .v { color: var(--blue); }
+.srv-tile.green .v { color: var(--green); }
+.srv-foot { display: flex; align-items: center; gap: 8px; margin-top: auto; }
+.srv-foot .btn.icon { flex: 0 0 auto; }
+
+/* ==========================================================================
+   Console page - panel head with power buttons, metric tiles, chart row.
+   ========================================================================== */
+.page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+.page-head h1 { font-family: var(--display); font-size: 30px; margin: 0; letter-spacing: -0.4px; }
+.page-head .sub { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 6px; font-family: var(--mono); font-size: 12px; color: var(--fg-dim); }
+.page-head .tools { display: flex; gap: 8px; align-items: center; }
+.icon-btn { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 10px; border: 1px solid var(--line);
+  background: rgba(255,255,255,0.025); color: var(--fg-dim); cursor: pointer; transition: all .15s; }
+.icon-btn:hover { color: var(--fg); border-color: var(--line-strong); background: rgba(255,255,255,0.06); }
+.icon-btn svg { width: 17px; height: 17px; }
+
+.panel-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.panel-head { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.018); }
+.panel-head .t { font-family: var(--display); font-size: 16px; font-weight: 600; }
+.power-btns { display: flex; gap: 8px; margin-left: auto; flex-wrap: wrap; }
+.power-btns .btn { min-width: 88px; justify-content: center; }
+
+.stat-card { display: flex; align-items: center; gap: 13px; padding: 12px 14px; }
+.stat-card .ic { width: 40px; height: 40px; flex: 0 0 40px; border-radius: 11px; display: grid; place-items: center;
+  background: rgba(255,255,255,0.045); border: 1px solid var(--line); color: var(--fg-dim); }
+.stat-card .ic svg { width: 18px; height: 18px; }
+.stat-card .meta { min-width: 0; flex: 1; }
+.stat-card .meta .k { font-size: 12.5px; color: var(--fg-dim); }
+.stat-card .meta .v { font-family: var(--mono); font-size: 13.5px; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stat-card.green .ic { color: var(--green); border-color: rgba(61,220,132,0.28); background: var(--green-dim); }
+.stat-card.blue .ic { color: var(--blue); border-color: rgba(90,169,255,0.28); background: var(--blue-dim); }
+.stat-card.violet .ic { color: var(--violet); border-color: rgba(167,139,250,0.28); background: rgba(167,139,250,0.12); }
+.stat-card.yellow .ic { color: var(--yellow); border-color: rgba(255,206,77,0.28); background: var(--yellow-dim); }
+.metric-grid { display: grid; gap: 9px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.metric-grid > * { padding: 11px 12px; }
+.metric-grid .k { font-size: 11px; color: var(--fg-dim); display: flex; align-items: center; gap: 6px; }
+.metric-grid .k svg { width: 13px; height: 13px; }
+.metric-grid .v { font-family: var(--mono); font-size: 15px; margin-top: 3px; }
+.chart-row { display: grid; gap: 14px; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 14px; }
+.chart-card { padding: 12px 14px 8px; }
+.chart-card .hd { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.chart-card .hd b { font-family: var(--display); font-size: 14px; }
+.chart-card .now { font-family: var(--mono); font-size: 13px; }
+.console-grid { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr) 330px; align-items: start; }
+@media (max-width: 1250px) { .console-grid { grid-template-columns: 1fr; } .chart-row { grid-template-columns: 1fr; } }
+@media (max-width: 700px) { .srv-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.console-input .prompt { font-family: var(--mono); color: var(--green); padding: 0 2px; display: grid; place-items: center; }
+.status-line { display: inline-flex; align-items: center; gap: 8px; padding: 4px 10px; border-radius: 20px; font-size: 11.5px;
+  border: 1px solid var(--line); background: rgba(255,255,255,0.03); color: var(--fg-dim); }
+.status-line i { width: 7px; height: 7px; border-radius: 50%; background: var(--fg-faint); }
+.status-line.running i { background: var(--green); } .status-line.starting i, .status-line.installing i { background: var(--yellow); }
+.status-line.offline i { background: #5c5c66; } .status-line.crashed i { background: var(--red); }
+
+/* ============================ shared components ============================ */
+/* LoadingOverlay */
+.loading-overlay { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center;
+  background: rgba(2,2,4,.72); backdrop-filter: blur(6px); }
+.loading-overlay.open { display: flex; animation: fadeIn .14s ease both; }
+.loading-card { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-radius: var(--radius);
+  border: 1px solid var(--line); background: var(--card); box-shadow: var(--shadow); font-size: 13.5px; }
+
+/* NotificationsDropdown */
+#notifHost { position: relative; display: inline-block; }
+#notifBtn { position: relative; }
+.dropdown { position: absolute; right: 0; top: calc(100% + 9px); width: 340px; max-height: 420px; overflow: auto; z-index: 80;
+  background: var(--card); border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: var(--shadow);
+  display: none; }
+.dropdown.open { display: block; animation: fadeUp .16s ease both; }
+.notif-item { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-bottom: 1px solid var(--line-subtle); }
+.notif-item:hover { background: rgba(255,255,255,0.03); }
+.notif-item .dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; flex: 0 0 8px; background: var(--blue); }
+.notif-item .dot.green { background: var(--green); } .notif-item .dot.red { background: var(--red); }
+.notif-item b { display: block; font-size: 12.5px; }
+.notif-item span span { display: block; }
+
+/* GlobalSearchModal */
+.gs-item { display: grid; grid-template-columns: 70px minmax(0,1fr); grid-template-rows: auto auto; gap: 1px 10px;
+  padding: 9px 10px; border-radius: var(--radius-sm); border: 1px solid transparent; }
+.gs-item:hover, .gs-item.active { background: rgba(255,255,255,0.045); border-color: var(--line); }
+.gs-item .gs-group { grid-row: 1 / span 2; align-self: center; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--fg-faint); }
+.gs-item b { font-size: 13.5px; }
+
+/* TutorialOverlay */
+.tour-box { position: fixed; inset: 0; z-index: 150; }
+.tour-ring { position: fixed; border-radius: 12px; box-shadow: 0 0 0 9999px rgba(2,2,4,.72); border: 1px solid rgba(255,255,255,.5);
+  transition: all .22s ease; pointer-events: none; }
+.tour-card { position: fixed; width: 330px; background: var(--card); border: 1px solid var(--line-strong); border-radius: var(--radius);
+  padding: 15px 16px; box-shadow: var(--shadow); }
+
+/* ImageCropper */
+.crop-stage { display: grid; place-items: center; background: #05050a; border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 12px; touch-action: none; }
+#cropCanvas { cursor: grab; background: repeating-conic-gradient(#16161c 0% 25%, #0d0d12 0% 50%) 50% / 18px 18px; }
+
+/* SearchableDropdown / CategorizedVersionDropdown */
+.sd { position: relative; display: inline-block; min-width: 190px; }
+.sd-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px; text-align: left;
+  padding: 9px 12px; border-radius: var(--radius-sm); border: 1px solid var(--line); background: rgba(255,255,255,0.03);
+  color: var(--fg); cursor: pointer; font-size: 13.5px; }
+.sd-btn:hover { border-color: var(--line-strong); }
+.sd-btn .sd-caret { width: 14px; height: 14px; transform: rotate(45deg); color: var(--fg-faint); }
+.sd-panel { position: absolute; z-index: 90; top: calc(100% + 6px); left: 0; right: 0; display: none; padding: 8px;
+  background: var(--card); border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: var(--shadow); }
+.sd-panel.open { display: block; }
+.sd-search { width: 100%; margin-bottom: 6px; }
+.sd-list { max-height: 260px; overflow: auto; }
+.sd-group { font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--fg-faint); padding: 8px 8px 4px; }
+.sd-item { width: 100%; display: flex; justify-content: space-between; gap: 10px; padding: 7px 9px; border: 0; border-radius: 7px;
+  background: none; color: var(--fg-dim); cursor: pointer; text-align: left; font-family: var(--mono); font-size: 12.5px; }
+.sd-item:hover, .sd-item.active { background: rgba(255,255,255,0.06); color: #fff; }
+
+/* topbar component hosts */
+#searchHost, #notifHost { display: inline-flex; align-items: center; }
+.update-badge { font-size: 10px; padding: 1px 6px; border-radius: 20px; background: var(--green-dim); color: var(--green); }
+.user-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+
+.preview-tabs { position: sticky; top: 0; z-index: 60; display: flex; gap: 8px; padding: 12px 20px; background: rgba(3,3,5,.92);
+  backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.preview-tabs button { background: none; border: 1px solid var(--line); color: var(--fg-dim); padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 13px; }
+.preview-tabs button.active { color: #06060a; background: #fff; border-color: #fff; }
+.preview-note { padding: 10px 20px; color: var(--fg-faint); font-size: 12.5px; }
+.screen { display: none; }
+.screen.active { display: block; }
+.pv-wrap { padding: 18px 22px 40px; }
+.pv-note { padding: 4px 2px 0; max-width: 900px; }
+.pv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 16px; }
+.pv-card { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); overflow: hidden; }
+.pv-head { display: flex; flex-direction: column; gap: 2px; padding: 11px 14px; border-bottom: 1px solid var(--line); }
+.pv-frame { position: relative; padding: 14px; min-height: 250px; background: var(--bg); overflow: hidden; }
+.pv-frame .overlay, .pv-frame .loading-overlay, .pv-frame .tour-box { position: absolute; }
+.pv-frame .tour-ring { box-shadow: 0 0 0 9999px rgba(2,2,4,.62); }
+.pv-frame .modal { width: 100%; }
+.pv-frame .crop-stage { padding: 10px; }
+</style>
+</head>
+<body>
+<div class="preview-tabs">
+  <button class="active" data-screen="servers">Servers page</button>
+  <button data-screen="console">Server console page</button>
+  <button data-screen="components">Shared components</button>
+  <span class="tiny dim" style="align-self:center;margin-left:8px">static preview with sample data - inline CSS/SVG only, so it renders in a sandboxed iframe</span>
+</div>
+<div class="screen active" id="screen-servers"><div class="shell ">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">Z</div><div class="brand-text"><b>Zenith Panel</b><span>Server Control</span></div></div>
+      <nav class="nav"></nav>
+      <div class="nav-foot"><a class="user-chip" href="#"><div class="avatar">A</div><div class="meta grow"><b>admin</b><span>owner</span></div></a></div>
+    </aside>
+    <div class="main">
+      <header class="topbar">
+        <div class="grow"><h1>Servers</h1><div class="crumb">all instances you can access</div></div>
+        <div class="page-actions"></div>
+        <div class="row" style="gap:8px"><span class="badge">14:07</span><button class="btn icon ghost" title="Sign out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M15 5H6v14h9M11 12h9M17 8.5l3.5 3.5L17 15.5"/></svg></button></div>
+      </header>
+      <main class="content">
+  <div class="row wrap" style="gap:10px;margin-bottom:16px;align-items:center">
+    <div class="grow" style="max-width:420px;position:relative">
+      <input type="search" placeholder="Search servers..." style="padding-left:34px">
+      <span style="position:absolute;left:11px;top:9px;width:15px;height:15px;color:var(--fg-faint)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></span>
+    </div>
+    <select style="max-width:170px"><option>All statuses</option></select>
+    <select style="max-width:180px"><option>Sort: name</option></select>
+    <div class="grow"></div>
+    <div class="view-toggle">
+      <button title="List"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <button class="active" title="Two columns"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></button>
+      <button title="Three columns"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="9.5" y="4" width="5" height="16" rx="1.5"/><rect x="16" y="4" width="5" height="16" rx="1.5"/></svg></button>
+    </div>
+    <button class="btn sm">Refresh</button>
+    <button class="btn sm primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Create server</button>
+  </div>
+  <div class="grid cards-2 stagger"><div class="card srv-card server-card" data-id="srv_demo_1">
+    <div class="srv-banner">
+      <svg class="art" viewBox="0 0 400 132" preserveAspectRatio="none" aria-hidden="true">
+    <defs><linearGradient id="sky-srv_demo_1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#32607a" stop-opacity="0.92"/><stop offset="100%" stop-color="#05060c" stop-opacity="0.95"/>
+    </linearGradient></defs>
+    <rect width="400" height="132" fill="url(#sky-srv_demo_1)"/>
+    <rect x="0" y="0" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="11" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="22" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="33" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="44" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="55" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="66" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="77" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="88" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="99" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="110" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="121" width="400" height="1" fill="#ffffff" opacity="0.03"/>
+    <g opacity="0.46"><rect x="212" y="21" width="89" height="9" rx="2" fill="#ffffff"/><rect x="224" y="13" width="44" height="9" rx="2" fill="#ffffff"/></g><g opacity="0.38"><rect x="306" y="35" width="51" height="9" rx="2" fill="#ffffff"/><rect x="318" y="27" width="26" height="9" rx="2" fill="#ffffff"/></g><polygon points="0,132 72,64 168,132 400,132" fill="#7ec8a0" opacity="0.42"/><polygon points="0,132 72,81 168,132 400,132" fill="#5aa9ff" opacity="0.34"/><polygon points="0,132 72,95 168,132 400,132" fill="#f0c674" opacity="0.26"/><rect x="31" y="104" width="17" height="17" rx="3" fill="#7ec8a0" opacity="0.5"/><rect x="74" y="108" width="17" height="17" rx="3" fill="#5aa9ff" opacity="0.5"/><rect x="129" y="111" width="17" height="17" rx="3" fill="#7ec8a0" opacity="0.5"/><rect x="183" y="98" width="17" height="17" rx="3" fill="#5aa9ff" opacity="0.5"/><rect x="236" y="96" width="17" height="17" rx="3" fill="#7ec8a0" opacity="0.5"/><rect x="278" y="96" width="17" height="17" rx="3" fill="#5aa9ff" opacity="0.5"/><rect x="328" y="114" width="17" height="17" rx="3" fill="#7ec8a0" opacity="0.5"/>
+  </svg>
+      <span class="srv-type"><i class="dot" style="background:#7ec8a0"></i>PAPER 1.21.4</span>
+      <span class="srv-pill running"><i></i>Running</span>
+      <div class="banner-title">
+        <b>Survival</b>
+        <span>Local Node · 7/30 online · docker</span>
+      </div>
+    </div>
+    <div class="srv-body">
+      <div class="srv-tiles">
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>Node</div><div class="v" title="Local Node">Local Node</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 2.5 14.4 0 17-2.5-2.6-2.5-14.4 0-17z"/></svg>Address</div><div class="v" title="play.example.com:25565">play.example.com:25565</div></div>
+        <div class="srv-tile blue"><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V5M4 19h16"/><path d="M8 19v-6M12.5 19V9M17 19v-4"/></svg>CPU usage</div><div class="v" title="12.4%">12.4%</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 17v3M12 17v3M17 17v3M7 7V4M12 7V4M17 7V4"/></svg>Memory</div><div class="v" title="1.42 GB">1.42 GB</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="6" rx="2"/><rect x="3" y="13" width="18" height="6" rx="2"/><path d="M7 8h.01M7 16h.01"/></svg>Storage</div><div class="v" title="1.86 GB">1.86 GB</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0111 0"/><path d="M16 5.5a3 3 0 010 5.6M17 13.2a5.5 5.5 0 013.5 5.1"/></svg>Players</div><div class="v" title="7 / 30">7 / 30</div></div>
+      </div>
+      <div class="srv-foot">
+        <button class="btn sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M20 12a8 8 0 11-2.7-6"/><path d="M20 4v5h-5"/></svg></button><button class="btn sm red"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="7" width="10" height="10" rx="2"/></svg></button>
+        <span class="tiny dim" style="margin-left:2px">up 4h 12m</span>
+        <div class="grow"></div>
+        <span class="chip">12 add-ons</span>
+        <a class="btn sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9l3 3-3 3M13 15h4"/></svg> Console</a>
+      </div>
+    </div>
+  </div><div class="card srv-card server-card" data-id="srv_demo_2">
+    <div class="srv-banner">
+      <svg class="art" viewBox="0 0 400 132" preserveAspectRatio="none" aria-hidden="true">
+    <defs><linearGradient id="sky-srv_demo_2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a3a30" stop-opacity="0.92"/><stop offset="100%" stop-color="#05060c" stop-opacity="0.95"/>
+    </linearGradient></defs>
+    <rect width="400" height="132" fill="url(#sky-srv_demo_2)"/>
+    <rect x="0" y="0" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="11" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="22" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="33" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="44" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="55" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="66" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="77" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="88" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="99" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="110" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="121" width="400" height="1" fill="#ffffff" opacity="0.03"/>
+    <g opacity="0.44"><rect x="97" y="37" width="77" height="9" rx="2" fill="#ffffff"/><rect x="109" y="29" width="38" height="9" rx="2" fill="#ffffff"/></g><g opacity="0.35"><rect x="82" y="59" width="50" height="9" rx="2" fill="#ffffff"/><rect x="94" y="51" width="25" height="9" rx="2" fill="#ffffff"/></g><polygon points="0,132 72,57 168,132 400,132" fill="#f0a868" opacity="0.42"/><polygon points="0,132 72,80 168,132 400,132" fill="#e07850" opacity="0.34"/><polygon points="0,132 72,94 168,132 400,132" fill="#ffd9a8" opacity="0.26"/><rect x="29" y="116" width="17" height="17" rx="3" fill="#f0a868" opacity="0.5"/><rect x="79" y="118" width="17" height="17" rx="3" fill="#e07850" opacity="0.5"/><rect x="137" y="107" width="17" height="17" rx="3" fill="#f0a868" opacity="0.5"/><rect x="189" y="97" width="17" height="17" rx="3" fill="#e07850" opacity="0.5"/><rect x="233" y="96" width="17" height="17" rx="3" fill="#f0a868" opacity="0.5"/><rect x="278" y="96" width="17" height="17" rx="3" fill="#e07850" opacity="0.5"/><rect x="328" y="109" width="17" height="17" rx="3" fill="#f0a868" opacity="0.5"/>
+  </svg>
+      <span class="srv-type"><i class="dot" style="background:#f0a868"></i>NEOFORGE 1.21.1</span>
+      <span class="srv-pill starting"><i></i>Starting</span>
+      <div class="banner-title">
+        <b>Modded SMP</b>
+        <span>Local Node · 0/20 online · docker</span>
+      </div>
+    </div>
+    <div class="srv-body">
+      <div class="srv-tiles">
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>Node</div><div class="v" title="Local Node">Local Node</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 2.5 14.4 0 17-2.5-2.6-2.5-14.4 0-17z"/></svg>Address</div><div class="v" title="play.example.com:25566">play.example.com:25566</div></div>
+        <div class="srv-tile blue"><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V5M4 19h16"/><path d="M8 19v-6M12.5 19V9M17 19v-4"/></svg>CPU usage</div><div class="v" title="46.8%">46.8%</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 17v3M12 17v3M17 17v3M7 7V4M12 7V4M17 7V4"/></svg>Memory</div><div class="v" title="3.04 GB">3.04 GB</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="6" rx="2"/><rect x="3" y="13" width="18" height="6" rx="2"/><path d="M7 8h.01M7 16h.01"/></svg>Storage</div><div class="v" title="6.21 GB">6.21 GB</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0111 0"/><path d="M16 5.5a3 3 0 010 5.6M17 13.2a5.5 5.5 0 013.5 5.1"/></svg>Players</div><div class="v" title="0 / 20">0 / 20</div></div>
+      </div>
+      <div class="srv-foot">
+        <button class="btn sm green"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.6v12.8L19 12z"/></svg></button>
+        <span class="tiny dim" style="margin-left:2px">stopped</span>
+        <div class="grow"></div>
+        <span class="chip">84 add-ons</span>
+        <a class="btn sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9l3 3-3 3M13 15h4"/></svg> Console</a>
+      </div>
+    </div>
+  </div><div class="card srv-card server-card" data-id="srv_demo_3">
+    <div class="srv-banner">
+      <svg class="art" viewBox="0 0 400 132" preserveAspectRatio="none" aria-hidden="true">
+    <defs><linearGradient id="sky-srv_demo_3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a5b6e" stop-opacity="0.92"/><stop offset="100%" stop-color="#05060c" stop-opacity="0.95"/>
+    </linearGradient></defs>
+    <rect width="400" height="132" fill="url(#sky-srv_demo_3)"/>
+    <rect x="0" y="0" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="11" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="22" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="33" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="44" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="55" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="66" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="77" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="88" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="99" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="110" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="121" width="400" height="1" fill="#ffffff" opacity="0.03"/>
+    <g opacity="0.35"><rect x="268" y="27" width="100" height="9" rx="2" fill="#ffffff"/><rect x="280" y="19" width="50" height="9" rx="2" fill="#ffffff"/></g><g opacity="0.39"><rect x="313" y="52" width="53" height="9" rx="2" fill="#ffffff"/><rect x="325" y="44" width="26" height="9" rx="2" fill="#ffffff"/></g><polygon points="0,132 72,64 168,132 400,132" fill="#f0d9a8" opacity="0.42"/><polygon points="0,132 72,77 168,132 400,132" fill="#9ad3c6" opacity="0.34"/><polygon points="0,132 72,95 168,132 400,132" fill="#ffb27a" opacity="0.26"/><rect x="32" y="113" width="17" height="17" rx="3" fill="#f0d9a8" opacity="0.5"/><rect x="76" y="117" width="17" height="17" rx="3" fill="#9ad3c6" opacity="0.5"/><rect x="135" y="115" width="17" height="17" rx="3" fill="#f0d9a8" opacity="0.5"/><rect x="189" y="98" width="17" height="17" rx="3" fill="#9ad3c6" opacity="0.5"/><rect x="238" y="96" width="17" height="17" rx="3" fill="#f0d9a8" opacity="0.5"/><rect x="279" y="96" width="17" height="17" rx="3" fill="#9ad3c6" opacity="0.5"/><rect x="328" y="116" width="17" height="17" rx="3" fill="#f0d9a8" opacity="0.5"/>
+  </svg>
+      <span class="srv-type"><i class="dot" style="background:#f0d9a8"></i>FABRIC 1.21.4</span>
+      <span class="srv-pill offline"><i></i>Offline</span>
+      <div class="banner-title">
+        <b>Creative Plot</b>
+        <span>Local Node · 0/40 online · process</span>
+      </div>
+    </div>
+    <div class="srv-body">
+      <div class="srv-tiles">
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>Node</div><div class="v" title="Local Node">Local Node</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 2.5 14.4 0 17-2.5-2.6-2.5-14.4 0-17z"/></svg>Address</div><div class="v" title="play.example.com:25567">play.example.com:25567</div></div>
+        <div class="srv-tile blue"><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V5M4 19h16"/><path d="M8 19v-6M12.5 19V9M17 19v-4"/></svg>CPU usage</div><div class="v" title="0.0%">0.0%</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 17v3M12 17v3M17 17v3M7 7V4M12 7V4M17 7V4"/></svg>Memory</div><div class="v" title="0 B">0 B</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="6" rx="2"/><rect x="3" y="13" width="18" height="6" rx="2"/><path d="M7 8h.01M7 16h.01"/></svg>Storage</div><div class="v" title="512 MB">512 MB</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0111 0"/><path d="M16 5.5a3 3 0 010 5.6M17 13.2a5.5 5.5 0 013.5 5.1"/></svg>Players</div><div class="v" title="0 / 40">0 / 40</div></div>
+      </div>
+      <div class="srv-foot">
+        <button class="btn sm green"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.6v12.8L19 12z"/></svg></button>
+        <span class="tiny dim" style="margin-left:2px">stopped</span>
+        <div class="grow"></div>
+        <span class="chip">6 add-ons</span>
+        <a class="btn sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9l3 3-3 3M13 15h4"/></svg> Console</a>
+      </div>
+    </div>
+  </div><div class="card srv-card server-card" data-id="srv_demo_4">
+    <div class="srv-banner">
+      <svg class="art" viewBox="0 0 400 132" preserveAspectRatio="none" aria-hidden="true">
+    <defs><linearGradient id="sky-srv_demo_4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#28455c" stop-opacity="0.92"/><stop offset="100%" stop-color="#05060c" stop-opacity="0.95"/>
+    </linearGradient></defs>
+    <rect width="400" height="132" fill="url(#sky-srv_demo_4)"/>
+    <rect x="0" y="0" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="11" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="22" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="33" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="44" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="55" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="66" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="77" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="88" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="99" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="110" width="400" height="1" fill="#ffffff" opacity="0.03"/><rect x="0" y="121" width="400" height="1" fill="#ffffff" opacity="0.03"/>
+    <g opacity="0.34"><rect x="129" y="47" width="85" height="9" rx="2" fill="#ffffff"/><rect x="141" y="39" width="42" height="9" rx="2" fill="#ffffff"/></g><g opacity="0.31"><rect x="261" y="22" width="51" height="9" rx="2" fill="#ffffff"/><rect x="273" y="14" width="25" height="9" rx="2" fill="#ffffff"/></g><polygon points="0,132 72,62 168,132 400,132" fill="#8fd6f0" opacity="0.42"/><polygon points="0,132 72,77 168,132 400,132" fill="#5aa9ff" opacity="0.34"/><polygon points="0,132 72,92 168,132 400,132" fill="#c9f0e0" opacity="0.26"/><rect x="26" y="98" width="17" height="17" rx="3" fill="#8fd6f0" opacity="0.5"/><rect x="82" y="96" width="17" height="17" rx="3" fill="#5aa9ff" opacity="0.5"/><rect x="125" y="110" width="17" height="17" rx="3" fill="#8fd6f0" opacity="0.5"/><rect x="175" y="98" width="17" height="17" rx="3" fill="#5aa9ff" opacity="0.5"/><rect x="235" y="96" width="17" height="17" rx="3" fill="#8fd6f0" opacity="0.5"/><rect x="278" y="96" width="17" height="17" rx="3" fill="#5aa9ff" opacity="0.5"/><rect x="328" y="99" width="17" height="17" rx="3" fill="#8fd6f0" opacity="0.5"/>
+  </svg>
+      <span class="srv-type"><i class="dot" style="background:#8fd6f0"></i>VELOCITY 3.4.0</span>
+      <span class="srv-pill running"><i></i>Running</span>
+      <div class="banner-title">
+        <b>Proxy</b>
+        <span>edge-1 · 23/500 online · process</span>
+      </div>
+    </div>
+    <div class="srv-body">
+      <div class="srv-tiles">
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>Node</div><div class="v" title="edge-1">edge-1</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 2.5 14.4 0 17-2.5-2.6-2.5-14.4 0-17z"/></svg>Address</div><div class="v" title="proxy.example.com:25577">proxy.example.com:25577</div></div>
+        <div class="srv-tile blue"><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V5M4 19h16"/><path d="M8 19v-6M12.5 19V9M17 19v-4"/></svg>CPU usage</div><div class="v" title="2.1%">2.1%</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 17v3M12 17v3M17 17v3M7 7V4M12 7V4M17 7V4"/></svg>Memory</div><div class="v" title="218 MB">218 MB</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="6" rx="2"/><rect x="3" y="13" width="18" height="6" rx="2"/><path d="M7 8h.01M7 16h.01"/></svg>Storage</div><div class="v" title="96 MB">96 MB</div></div>
+        <div class="srv-tile "><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0111 0"/><path d="M16 5.5a3 3 0 010 5.6M17 13.2a5.5 5.5 0 013.5 5.1"/></svg>Players</div><div class="v" title="23 / 500">23 / 500</div></div>
+      </div>
+      <div class="srv-foot">
+        <button class="btn sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M20 12a8 8 0 11-2.7-6"/><path d="M20 4v5h-5"/></svg></button><button class="btn sm red"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="7" width="10" height="10" rx="2"/></svg></button>
+        <span class="tiny dim" style="margin-left:2px">up 2d 6h</span>
+        <div class="grow"></div>
+        <span class="chip">3 add-ons</span>
+        <a class="btn sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9l3 3-3 3M13 15h4"/></svg> Console</a>
+      </div>
+    </div>
+  </div></div>
+  <div class="row wrap" style="gap:10px;margin-top:16px">
+    <span class="tiny dim">4 servers · 2 running · 4.6 GB in use right now</span>
+    <div class="grow"></div>
+    <span class="tiny dim">Every card shows the numbers the node really reports - no placeholders.</span>
+  </div></main>
+    </div>
+  </div></div>
+<div class="screen" id="screen-console"><div class="shell rail">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">Z</div></div>
+      <nav class="nav"><a href="#" class="" title="Dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg></a><a href="#" class="" title="Analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V5M4 19h16"/><path d="M8 19v-6M12.5 19V9M17 19v-4"/></svg></a><a href="#" class="active" title="Servers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></a><a href="#" class="" title="Create Server"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></a><a href="#" class="" title="Nodes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></a><a href="#" class="" title="Allocations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 2.5 14.4 0 17-2.5-2.6-2.5-14.4 0-17z"/></svg></a><a href="#" class="" title="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0111 0"/><path d="M16 5.5a3 3 0 010 5.6M17 13.2a5.5 5.5 0 013.5 5.1"/></svg></a><a href="#" class="" title="Admin Servers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></a><a href="#" class="" title="API Keys"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="12" r="3.4"/><path d="M11.4 12H21M17 9.5V14M19.5 9.5V14"/></svg></a><a href="#" class="" title="Admin Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.4M12 18.6V21M5.6 5.6l1.7 1.7M16.7 16.7l1.7 1.7M3 12h2.4M18.6 12H21M5.6 18.4l1.7-1.7M16.7 7.3l1.7-1.7"/></svg></a><div class="rail-split">
+      <div class="rail-divider"></div>
+      <button data-tab="console" title="Console" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9l3 3-3 3M13 15h4"/></svg><span>Console</span></button><button data-tab="players" title="Players" class=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0111 0"/><path d="M16 5.5a3 3 0 010 5.6M17 13.2a5.5 5.5 0 013.5 5.1"/></svg><span>Players</span></button><button data-tab="files" title="Files" class=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 7.5A2 2 0 015 5.5h4l2 2.5h8a2 2 0 012 2v6.5a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg><span>Files</span></button><button data-tab="properties" title="Properties" class=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 20h4l10-10-4-4L4 16z"/><path d="M14 6l4 4"/></svg><span>Properties</span></button><button data-tab="worlds" title="Worlds" class=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 4l2.4 5 5.6.8-4 3.9 1 5.6-5-2.7-5 2.7 1-5.6-4-3.9 5.6-.8z"/></svg><span>Worlds</span></button><button data-tab="sftp" title="SFTP" class=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="12" r="3.4"/><path d="M11.4 12H21M17 9.5V14M19.5 9.5V14"/></svg><span>SFTP</span></button><button data-tab="plugins" title="Modrinth" class=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 4h4v2.2a1.8 1.8 0 103.6 0V4H20v4h-1.8a1.8 1.8 0 100 3.6H20V20h-4.6v-1.8a1.8 1.8 0 10-3.6 0V20H4v-4.6h1.8a1.8 1.8 0 100-3.6H4V4h6z"/></svg><span>Modrinth</span></button><button data-tab="backups" title="Backups" class=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><ellipse cx="12" cy="6.5" rx="7.5" ry="3"/><path d="M4.5 6.5v11c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-11M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/></svg><span>Backups</span></button><button data-tab="network" title="Network" class=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 2.5 14.4 0 17-2.5-2.6-2.5-14.4 0-17z"/></svg><span>Network</span></button><button data-tab="schedules" title="Schedules" class=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>Schedules</span></button><button data-tab="people" title="People" class=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 19.5a6.5 6.5 0 0113 0"/></svg><span>People</span></button><button data-tab="settings" title="Settings" class=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.4M12 18.6V21M5.6 5.6l1.7 1.7M16.7 16.7l1.7 1.7M3 12h2.4M18.6 12H21M5.6 18.4l1.7-1.7M16.7 7.3l1.7-1.7"/></svg><span>Settings</span></button>
+    </div></nav>
+      <div class="nav-foot"><a class="user-chip" href="#"><div class="avatar">A</div></a></div>
+    </aside>
+    <div class="main">
+      <header class="topbar">
+        <div class="grow"><h1></h1><div class="crumb"></div></div>
+        <div class="page-actions"></div>
+        <div class="row" style="gap:8px"><span class="badge">14:07</span><button class="btn icon ghost" title="Sign out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M15 5H6v14h9M11 12h9M17 8.5l3.5 3.5L17 15.5"/></svg></button></div>
+      </header>
+      <main class="content">
+  <div class="page-head">
+    <div>
+      <h1>Survival</h1>
+      <div class="sub">
+        <span class="status-line running"><i></i>Running</span>
+        <span>PAPER 1.21.4</span><span>·</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>Local Node</span><span>·</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 8.5L12 4l9 4.5v7L12 20l-9-4.5z"/><path d="M3 8.5L12 13l9-4.5M12 13v7"/></svg>container zenith-srv_demo_1</span><span>·</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 17v3M12 17v3M17 17v3M7 7V4M12 7V4M17 7V4"/></svg>2048 MB heap</span><span>·</span>
+        <span>Java 21</span>
+      </div>
+    </div>
+    <div class="tools">
+      <button class="icon-btn" title="Jump to the command line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></button>
+      <button class="icon-btn" title="Server settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.4M12 18.6V21M5.6 5.6l1.7 1.7M16.7 16.7l1.7 1.7M3 12h2.4M18.6 12H21M5.6 18.4l1.7-1.7M16.7 7.3l1.7-1.7"/></svg></button>
+      <button class="icon-btn" title="Panel analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V5M4 19h16"/><path d="M8 19v-6M12.5 19V9M17 19v-4"/></svg></button>
+      <button class="icon-btn" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M20 12a8 8 0 11-2.7-6"/><path d="M20 4v5h-5"/></svg></button>
+    </div>
+  </div>
+  <div class="console-grid">
+    <div class="stack">
+      <div class="card panel-card">
+        <div class="panel-head">
+          <span class="t">Survival</span>
+          <span class="badge tiny green">live (websocket)</span>
+          <span class="tiny dim">PAPER 1.21.4 | docker (zenith-srv_demo_1) | play.example.com:25565</span>
+          <div class="power-btns">
+            <button class="btn green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M20 12a8 8 0 11-2.7-6"/><path d="M20 4v5h-5"/></svg> Restart</button>
+            <button class="btn red"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="7" width="10" height="10" rx="2"/></svg> Stop</button>
+          </div>
+          <button class="btn ghost sm icon" title="Clear the view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></button>
+          <button class="btn ghost sm icon" title="Jump to the newest line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19h14"/></svg></button>
+        </div>
+        <div class="terminal-body" style="min-height:320px;max-height:42vh">
+          <span class="l"><span class="dim">[14:06:31 INFO]</span> Starting minecraft server version 1.21.4</span><span class="l"><span class="dim">[14:06:31 INFO]</span> Loading properties</span><span class="l"><span class="dim">[14:06:31 INFO]</span> This server is running Paper version 1.21.4-232</span><span class="l"><span class="dim">[14:06:32 INFO]</span> Preparing level "world"</span><span class="l"><span class="dim">[14:06:33 INFO]</span> Preparing start region for dimension minecraft:overworld</span><span class="l"><span class="dim">[14:06:36 INFO]</span> Done (4.312s)! For help, type "help"</span><span class="l"><span class="dim">[14:06:41 INFO]</span> Steve joined the game</span><span class="l"><span class="dim">[14:06:44 INFO]</span> Alex joined the game</span><span class="l"><span class="dim">[14:07:02 INFO]</span> <Steve> nice, the panel restarted the server automatically</span><span class="l"><span class="dim">[14:07:19 INFO]</span> Saving chunks for level "ServerLevel[world]"/minecraft:overworld</span>
+          <span class="l cmd">&gt; say the console theme is done</span>
+          <span class="l panel">[panel] Command sent to the container</span>
+        </div>
+        <div class="console-input">
+          <span class="prompt">&raquo;</span>
+          <input type="text" placeholder="Type a command..." readonly>
+          <button class="btn primary">Send</button>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="card chart-card">
+          <div class="hd"><b>CPU load</b><span class="tiny dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M4 10h3M4 14h3M17 10h3M17 14h3M10 4v3M14 4v3M10 17v3M14 17v3"/></svg> this server</span></div>
+          <div class="chart-box" style="height:96px">
+    <div class="chart-axis"><span>17%</span><span>9%</span><span>0%</span></div>
+    <svg class="chart" viewBox="0 0 600 96" preserveAspectRatio="none" role="img">
+      <g class="chart-grid"><line x1="0" x2="600" y1="96.0" y2="96.0"/><line x1="0" x2="600" y1="72.0" y2="72.0"/><line x1="0" x2="600" y1="48.0" y2="48.0"/><line x1="0" x2="600" y1="24.0" y2="24.0"/><line x1="0" x2="600" y1="0.0" y2="0.0"/></g>
+      <path class="chart-fill" d="M0.0 60.2 L46.2 51.7 L92.3 64.4 L138.5 44.8 L184.6 27.4 L230.8 33.7 L276.9 47.5 L323.1 37.9 L369.2 41.1 L415.4 28.9 L461.5 15.7 L507.7 24.7 L553.8 32.6 L600.0 27.4 L600 96 L0 96 Z" style="fill:var(--blue)"/>
+      <path class="chart-line" d="M0.0 60.2 L46.2 51.7 L92.3 64.4 L138.5 44.8 L184.6 27.4 L230.8 33.7 L276.9 47.5 L323.1 37.9 L369.2 41.1 L415.4 28.9 L461.5 15.7 L507.7 24.7 L553.8 32.6 L600.0 27.4" style="stroke:var(--blue)"/>
+      <circle class="chart-dot" cx="600" cy="27.4" r="3.5" style="fill:var(--blue)"/>
+    </svg>
+    <div class="chart-mini"><span>14:02</span><span>now</span></div>
+  </div>
+  <div class="row between mt"><span class="tiny dim">CPU of this server</span><span class="tiny mono">12.4%</span></div>
+        </div>
+        <div class="card chart-card">
+          <div class="hd"><b>Memory</b><span class="tiny dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 17v3M12 17v3M17 17v3M7 7V4M12 7V4M17 7V4"/></svg> heap in use</span></div>
+          <div class="chart-box" style="height:96px">
+    <div class="chart-axis"><span>1670</span><span>835</span><span>0</span></div>
+    <svg class="chart" viewBox="0 0 600 96" preserveAspectRatio="none" role="img">
+      <g class="chart-grid"><line x1="0" x2="600" y1="96.0" y2="96.0"/><line x1="0" x2="600" y1="72.0" y2="72.0"/><line x1="0" x2="600" y1="48.0" y2="48.0"/><line x1="0" x2="600" y1="24.0" y2="24.0"/><line x1="0" x2="600" y1="0.0" y2="0.0"/></g>
+      <path class="chart-fill" d="M0.0 29.4 L46.2 27.8 L92.3 28.6 L138.5 25.1 L184.6 22.7 L230.8 23.5 L276.9 20.8 L323.1 19.1 L369.2 19.7 L415.4 17.4 L461.5 16.5 L507.7 15.0 L553.8 15.6 L600.0 14.7 L600 96 L0 96 Z" style="fill:var(--green)"/>
+      <path class="chart-line" d="M0.0 29.4 L46.2 27.8 L92.3 28.6 L138.5 25.1 L184.6 22.7 L230.8 23.5 L276.9 20.8 L323.1 19.1 L369.2 19.7 L415.4 17.4 L461.5 16.5 L507.7 15.0 L553.8 15.6 L600.0 14.7" style="stroke:var(--green)"/>
+      <circle class="chart-dot" cx="600" cy="14.7" r="3.5" style="fill:var(--green)"/>
+    </svg>
+    <div class="chart-mini"><span>14:02</span><span>now</span></div>
+  </div>
+  <div class="row between mt"><span class="tiny dim">RSS of the server process</span><span class="tiny mono">1452.0 MB</span></div>
+        </div>
+        <div class="card chart-card">
+          <div class="hd"><b>Network</b><span class="tiny dim">container in/out</span></div>
+          <div class="chart-box" style="height:96px">
+    <div class="chart-axis"><span>589</span><span>295</span><span>0</span></div>
+    <svg class="chart" viewBox="0 0 600 96" preserveAspectRatio="none" role="img">
+      <g class="chart-grid"><line x1="0" x2="600" y1="96.0" y2="96.0"/><line x1="0" x2="600" y1="72.0" y2="72.0"/><line x1="0" x2="600" y1="48.0" y2="48.0"/><line x1="0" x2="600" y1="24.0" y2="24.0"/><line x1="0" x2="600" y1="0.0" y2="0.0"/></g>
+      <path class="chart-fill" d="M0.0 65.5 L46.2 56.3 L92.3 61.7 L138.5 45.6 L184.6 52.0 L230.8 31.6 L276.9 38.6 L323.1 49.0 L369.2 41.0 L415.4 14.8 L461.5 21.5 L507.7 32.6 L553.8 27.3 L600.0 33.7 L600 96 L0 96 Z" style="fill:var(--violet)"/>
+      <path class="chart-line" d="M0.0 65.5 L46.2 56.3 L92.3 61.7 L138.5 45.6 L184.6 52.0 L230.8 31.6 L276.9 38.6 L323.1 49.0 L369.2 41.0 L415.4 14.8 L461.5 21.5 L507.7 32.6 L553.8 27.3 L600.0 33.7" style="stroke:var(--violet)"/>
+      <circle class="chart-dot" cx="600" cy="33.7" r="3.5" style="fill:var(--violet)"/>
+    </svg>
+    <div class="chart-mini"><span>14:02</span><span>now</span></div>
+  </div>
+  <div class="row between mt"><span class="tiny dim">bytes/s</span><span class="tiny mono">388.0 KiB/s</span></div>
+        </div>
+      </div>
+
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Quick commands</h3>
+          <div class="chips mt"><span class="chip">list</span><span class="chip">save-all</span><span class="chip">whitelist list</span><span class="chip">tps</span><span class="chip">time set day</span><span class="chip">weather clear</span></div>
+          <div class="tiny dim mt">Click to fill, then press Send.</div>
+        </div>
+        <div class="card">
+          <h3>Last events</h3>
+          <div class="tiny">
+            <div class="row between" style="padding:4px 0"><span><span class="dim">server.start</span> Started in container</span><span class="dim">5 min ago</span></div>
+            <div class="row between" style="padding:4px 0"><span><span class="dim">backup.create</span> world-2026-10-16.zip</span><span class="dim">1 h ago</span></div>
+            <div class="row between" style="padding:4px 0"><span><span class="dim">plugin.install</span> EssentialsX 2.20.1</span><span class="dim">3 h ago</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="card stat-card blue">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 2.5 14.4 0 17-2.5-2.6-2.5-14.4 0-17z"/></svg></div>
+        <div class="meta"><div class="k">Address</div><div class="v">play.example.com:25565</div></div>
+        <button class="btn ghost sm icon" title="Copy the join address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 4h9l4 4v12H6z"/><path d="M9 4v5h6V4M9 20v-6h6v6"/></svg></button>
+      </div>
+      <div class="card stat-card green">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></div>
+        <div class="meta"><div class="k">Uptime</div><div class="v">4h 12m 08s</div></div>
+      </div>
+      <div class="card stat-card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M4 10h3M4 14h3M17 10h3M17 14h3M10 4v3M14 4v3M10 17v3M14 17v3"/></svg></div>
+        <div class="meta"><div class="k">CPU load</div><div class="v">12.42%</div></div>
+      </div>
+      <div class="card stat-card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 17v3M12 17v3M17 17v3M7 7V4M12 7V4M17 7V4"/></svg></div>
+        <div class="meta"><div class="k">Memory</div><div class="v">1.42 GiB / 2 GiB</div></div>
+      </div>
+      <div class="card stat-card yellow">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="6" rx="2"/><rect x="3" y="13" width="18" height="6" rx="2"/><path d="M7 8h.01M7 16h.01"/></svg></div>
+        <div class="meta"><div class="k">Disk</div><div class="v">1.86 GiB / 10 GiB</div></div>
+      </div>
+      <div class="card stat-card violet">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 8.5L12 4l9 4.5v7L12 20l-9-4.5z"/><path d="M3 8.5L12 13l9-4.5M12 13v7"/></svg></div>
+        <div class="meta"><div class="k">Runtime</div><div class="v">container · zenith-srv_demo_1</div></div>
+      </div>
+      <div class="metric-grid">
+        <div class="card"><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19h14"/></svg> Inbound</div><div class="v">124.6 KiB/s</div></div>
+        <div class="card"><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 15V4M7.5 8.5L12 4l4.5 4.5M5 19h14"/></svg> Outbound</div><div class="v">88.2 KiB/s</div></div>
+      </div>
+      <div class="card">
+        <div class="row between"><span class="label tiny dim">Players</span><span class="badge tiny mono">7 / 30</span></div>
+        <div class="chips mt"><span class="player-pill">Steve</span><span class="player-pill">Alex</span><span class="player-pill">Notch</span><span class="player-pill">Herobrine</span></div>
+      </div>
+      <div class="card">
+        <span class="label tiny dim">Legacy meters</span>
+        <div class="stack mt" style="gap:8px">
+          <div><div class="row between tiny"><span class="dim">CPU</span><span class="mono">12.4%</span></div><div class="bar"><i style="width:12%"></i></div></div>
+          <div><div class="row between tiny"><span class="dim">Memory</span><span class="mono">1.42 GiB / 2 GiB</span></div><div class="bar blue"><i style="width:71%"></i></div></div>
+          <div><div class="row between tiny"><span class="dim">Disk</span><span class="mono">1.86 GiB</span></div><div class="bar yellow"><i style="width:19%"></i></div></div>
+        </div>
+      </div>
+    </div>
+  </div></main>
+    </div>
+  </div></div>
+<div class="screen" id="screen-components">
+<div class="pv-wrap">
+  <div class="page-head"><h1>Shared components</h1><div class="sub">public/js/components.js - loaded on every page after app.js, no framework, no build step</div></div>
+  <div class="pv-grid">
+    
+      <div class="pv-card">
+        <div class="pv-head"><b>LoadingOverlay</b><span class="tiny dim">blocking overlay + Loading.run()</span></div>
+        <div class="pv-frame"><div class="loading-card"><span class="spinner" style="width:22px;height:22px"></span><div>Installing Paper 1.21.4 (build 232)...</div></div></div>
+      </div>
+      <div class="pv-card">
+        <div class="pv-head"><b>NotificationsDropdown</b><span class="tiny dim">topbar bell, unread badge, activity feed</span></div>
+        <div class="pv-frame"><div style="position:relative;min-height:210px">
+      <div class="row" style="justify-content:flex-end;padding:6px 4px">
+        <button class="btn icon ghost" style="position:relative"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V5M4 19h16"/><path d="M8 19v-6M12.5 19V9M17 19v-4"/></svg>
+          <span class="badge red tiny" style="position:absolute;top:-4px;right:-4px;padding:0 5px">3</span></button>
+      </div>
+      <div class="dropdown open" style="right:0;top:36px;max-height:none">
+        <div class="row between" style="padding:10px 12px;border-bottom:1px solid var(--line)">
+          <b class="tiny">Notifications</b>
+          <div class="row" style="gap:6px"><button class="btn ghost sm">Reload</button><button class="btn ghost sm">Mark all read</button></div>
+        </div>
+        <a class="notif-item"><span class="dot green"></span><span class="grow"><b>server.start</b><span class="tiny dim">Survival SMP · container zenith-srv_9f21 started</span></span><span class="tiny dim mono">2m</span></a>
+        <a class="notif-item"><span class="dot red"></span><span class="grow"><b>server.crash</b><span class="tiny dim">Proxy · exit code 1, restarting</span></span><span class="tiny dim mono">18m</span></a>
+        <a class="notif-item"><span class="dot blue"></span><span class="grow"><b>plugin.install</b><span class="tiny dim">Survival SMP · EssentialsX 2.20.1</span></span><span class="tiny dim mono">1h</span></a>
+      </div></div></div>
+      </div>
+      <div class="pv-card">
+        <div class="pv-head"><b>GlobalSearchModal</b><span class="tiny dim">Ctrl/⌘+K over servers, nodes and pages</span></div>
+        <div class="pv-frame"><div class="modal" style="width:100%;max-width:420px">
+      <div class="modal-head"><h3>Search</h3><button class="btn icon ghost">undefined</button></div>
+      <div class="modal-body" style="padding:14px 16px">
+        <input type="search" value="surv" placeholder="Search servers, nodes, pages...">
+        <div class="mt">
+          <a class="gs-item active"><span class="gs-group">Servers</span><b>Survival SMP</b><span class="tiny dim">PAPER 1.21.4 · running · Local Node</span></a>
+          <a class="gs-item"><span class="gs-group">Servers</span><b>Survival Test</b><span class="tiny dim">FABRIC 1.20.1 · offline · Local Node</span></a>
+          <a class="gs-item"><span class="gs-group">Pages</span><b>Servers</b><span class="tiny dim">all instances</span></a>
+        </div>
+        <div class="tiny dim mt">Tip: press <span class="mono">Ctrl</span> + <span class="mono">K</span> anywhere in the panel.</div>
+      </div></div></div>
+      </div>
+      <div class="pv-card">
+        <div class="pv-head"><b>TutorialOverlay</b><span class="tiny dim">first-run spotlight tour, replayable from Account</span></div>
+        <div class="pv-frame"><div style="position:relative;min-height:230px;background:radial-gradient(circle at 30% 20%, rgba(90,169,255,.10), transparent 60%)">
+      <div class="tour-ring" style="left:24px;top:16px;width:120px;height:52px;box-shadow:0 0 0 9999px rgba(2,2,4,.62)"></div>
+      <div class="tour-card" style="position:absolute;left:24px;top:86px;width:300px">
+        <div class="tiny dim">Step 2 of 6</div>
+        <h3 style="margin:4px 0 6px">Your servers</h3>
+        <div class="tiny" style="color:var(--fg-dim)">Everything you own. Create a new one from Create Server - the panel downloads the jar and a matching Java runtime for you.</div>
+        <div class="row between mt"><button class="btn ghost sm">Skip</button>
+          <div class="row" style="gap:6px"><button class="btn sm">Back</button><button class="btn primary sm">Next</button></div></div>
+      </div></div></div>
+      </div>
+      <div class="pv-card">
+        <div class="pv-head"><b>SearchableDropdown · CategorizedVersionDropdown</b><span class="tiny dim">filterable select, grouped builds</span></div>
+        <div class="pv-frame"><div style="min-height:250px">
+      <div class="sd" data-value="1.21.4"><button class="sd-btn">1.21.4<span class="sd-caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>
+        <div class="sd-panel open">
+          <input type="search" class="sd-search" placeholder="Filter...">
+          <div class="sd-list">
+            <div class="sd-group">Stable releases</div>
+            <button class="sd-item active"><span>1.21.4</span><span class="tiny dim">current</span></button>
+            <button class="sd-item"><span>1.21.3</span></button>
+            <button class="sd-item"><span>1.20.6</span></button>
+            <div class="sd-group">Snapshots &amp; pre-releases</div>
+            <button class="sd-item"><span>26.4-snapshot-4</span></button>
+            <button class="sd-item"><span>1.21.5-pre2</span></button>
+          </div></div></div></div></div>
+      </div>
+      <div class="pv-card">
+        <div class="pv-head"><b>ImageCropper</b><span class="tiny dim">canvas square crop → PATCH /api/auth/profile</span></div>
+        <div class="pv-frame"><div class="crop-stage"><canvas width="240" height="240" style="width:240px;height:240px;background:repeating-conic-gradient(#16161c 0% 25%,#0d0d12 0% 50%) 50% / 18px 18px"></canvas></div>
+      <div class="row mt" style="gap:10px"><span class="tiny dim">Zoom</span><input type="range" min="1" max="3" value="1.2" class="grow"><button class="btn sm">Reset</button></div></div>
+      </div>
+      <div class="pv-card">
+        <div class="pv-head"><b>ModrinthVersionModal</b><span class="tiny dim">build picker used by the Plugins and Mods tabs</span></div>
+        <div class="pv-frame"><div class="row between" style="gap:10px"><select style="max-width:140px"><option>All channels</option></select><input type="search" placeholder="filter by game version..." style="max-width:180px"><div class="grow"></div><span class="badge tiny">3 builds</span></div>
+      <div class="mt">
+        <div class="row between" style="padding:9px 4px;border-bottom:1px solid var(--line-subtle)">
+          <div class="stack" style="gap:3px"><div class="row" style="gap:8px"><b class="mono">2.20.1</b><span class="badge tiny green">release</span><span class="tiny dim">paper, spigot</span></div>
+            <div class="tiny dim">for 1.21.4, 1.21.3 · 412k downloads · 3 weeks ago</div></div>
+          <button class="btn sm primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19h14"/></svg> Install</button></div>
+        <div class="row between" style="padding:9px 4px;border-bottom:1px solid var(--line-subtle)">
+          <div class="stack" style="gap:3px"><div class="row" style="gap:8px"><b class="mono">2.20.0</b><span class="badge tiny yellow">beta</span><span class="tiny dim">paper</span></div>
+            <div class="tiny dim">for 1.21.4 · 88k downloads · 2 months ago</div></div>
+          <button class="btn sm primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19h14"/></svg> Install</button></div>
+      </div></div>
+      </div>
+      <div class="pv-card">
+        <div class="pv-head"><b>SystemUpdateListener · UpdateWatch</b><span class="tiny dim">only claims an update when a feed really differs</span></div>
+        <div class="pv-frame"><div class="banner-note">undefined<div class="grow"><b>A newer panel version is available (1.1.0)</b><div class="tiny dim">Run the update command on the host to upgrade.</div></div><button class="btn sm">How to update</button></div>
+      <div class="tiny dim mt">With no feed configured the same API answers honestly: <span class="mono">"No update feed configured - set UPDATE_FEED_URL in .env"</span>.</div></div>
+      </div>
+      <div class="pv-card">
+        <div class="pv-head"><b>Plugins / Mods tabs</b><span class="tiny dim">one renderer, ids scoped per mode</span></div>
+        <div class="pv-frame"><div class="tabs" style="margin-bottom:14px"><button class="active">Installed</button><button>Browse Modrinth</button></div>
+      <div class="row between"><div class="row" style="gap:8px"><input type="search" placeholder="filter installed..." style="max-width:200px"><button class="btn sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M20 12a8 8 0 11-2.7-6"/><path d="M20 4v5h-5"/></svg> Check for updates</button></div><span class="badge tiny">4 plugins</span></div>
+      <div class="card flush mt"><div class="row" style="gap:10px;padding:10px"><img class="plugin-icon" style="width:30px;height:30px" alt="">
+        <div class="grow"><div style="font-weight:600">EssentialsX</div><div class="tiny dim mono">EssentialsX-2.20.1.jar</div></div>
+        <span class="badge green">enabled</span><button class="btn sm ghost">update</button><button class="btn sm ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg></button></div></div></div>
+      </div>
+  </div>
+  <div class="tiny dim pv-note">Every component above is wired to the real API in the panel: the bell reads <span class="mono">/api/system/activity</span>,
+  search reads <span class="mono">/api/servers</span> + <span class="mono">/api/nodes</span>, the cropper saves to
+  <span class="mono">PATCH /api/auth/profile</span>, the build picker installs through <span class="mono">POST /api/modrinth/servers/:id/packages</span>.</div>
+</div></div>
+<script>
+  document.querySelectorAll('.preview-tabs button').forEach((b) => b.onclick = () => {
+    document.querySelectorAll('.preview-tabs button').forEach((x) => x.classList.toggle('active', x === b));
+    document.querySelectorAll('.screen').forEach((s) => s.classList.toggle('active', s.id === 'screen-' + b.dataset.screen));
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Servers - Zenith Panel</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23101014'/><text x='16' y='22' font-size='18' font-family='Arial' font-weight='700' fill='%23fff' text-anchor='middle'>Z</text></svg>">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar"></aside>
+  <div class="main">
+    <header class="topbar"></header>
+    <main class="content">
+      <div class="toolbar row wrap" style="gap:10px;margin-bottom:16px;align-items:center">
+        <div class="grow" style="max-width:420px;position:relative">
+          <input type="search" id="searchInput" placeholder="Search servers..." style="padding-left:34px" autocomplete="off">
+          <span style="position:absolute;left:11px;top:9px;width:15px;height:15px;color:var(--fg-faint)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+          </span>
+        </div>
+        <select id="statusFilter" style="max-width:170px">
+          <option value="">All statuses</option>
+          <option value="running">Running</option>
+          <option value="offline">Offline</option>
+          <option value="starting">Starting</option>
+          <option value="installing">Installing</option>
+          <option value="crashed">Crashed</option>
+        </select>
+        <select id="sortSelect" style="max-width:180px">
+          <option value="name">Sort: name</option>
+          <option value="status">Sort: status</option>
+          <option value="created">Sort: newest</option>
+        </select>
+        <div class="grow"></div>
+        <div class="view-toggle" id="viewToggle" title="Layout">
+          <button data-view="1" title="List">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <button data-view="2" class="active" title="Two columns">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
+          </button>
+          <button data-view="3" title="Three columns">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="9.5" y="4" width="5" height="16" rx="1.5"/><rect x="16" y="4" width="5" height="16" rx="1.5"/></svg>
+          </button>
+        </div>
+        <button class="btn sm" id="refreshBtn">Refresh</button>
+      </div>
+      <div id="serverGrid" class="grid cards-2 stagger"></div>
+      <div class="row wrap mt" style="gap:10px;margin-top:16px">
+        <span class="tiny dim" id="fleetLine"></span>
+        <div class="grow"></div>
+        <span class="tiny dim">Every card shows the numbers the node really reports - no placeholders.</span>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="js/app.js"></script>
+<script src="js/components.js"></script>
+<script src="js/servers.js"></script>
+</body>
+</html>

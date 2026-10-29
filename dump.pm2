@@ -1,0 +1,136 @@
+[
+  {
+    "name": "zenith-panel",
+    "filter_env": [],
+    "namespace": "default",
+    "log_date_format": "YYYY-MM-DDTHH:mm:ss",
+    "time": true,
+    "env": {
+      "SHELL": "/bin/bash",
+      "E2B_TEMPLATE_ID": "nlhz8vlwyupq845jsdg9",
+      "E2B_EVENTS_ADDRESS": "http://192.0.2.1",
+      "PWD": "/home/user",
+      "LOGNAME": "user",
+      "HOME": "/home/user",
+      "E2B_SANDBOX_ID": "irjxzdvnc5oww7edw4yrj",
+      "OWNER_SECRET": "xxNUrU5ij5m4ZZkndbapL3FShu0TTvpm",
+      "USER": "user",
+      "SHLVL": "3",
+      "PATH": "/tmp/zenith-fake-docker/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games",
+      "ZENITH_LOG": "/tmp/zenith-installer-check.log",
+      "E2B_SANDBOX": "true",
+      "OLDPWD": "/home/user",
+      "_": "/usr/bin/pm2",
+      "PM2_USAGE": "CLI",
+      "PM2_HOME": "/home/user/.pm2",
+      "zenith-panel": {},
+      "unique_id": "d6b23b79-2dd3-4d94-8b63-36bfca725a91"
+    },
+    "merge_logs": true,
+    "vizion": true,
+    "autostart": true,
+    "autorestart": true,
+    "watch": false,
+    "instance_var": "NODE_APP_INSTANCE",
+    "pmx": true,
+    "automation": true,
+    "treekill": true,
+    "username": "user",
+    "windowsHide": true,
+    "kill_retry_time": 100,
+    "node_args": [],
+    "pm_exec_path": "/home/user/server.js",
+    "pm_cwd": "/home/user",
+    "exec_interpreter": "node",
+    "exec_mode": "fork_mode",
+    "pm_out_log_path": "/home/user/.pm2/logs/zenith-panel-out.log",
+    "pm_err_log_path": "/home/user/.pm2/logs/zenith-panel-error.log",
+    "pm_pid_path": "/home/user/.pm2/pids/zenith-panel-0.pid",
+    "km_link": false,
+    "vizion_running": false,
+    "NODE_APP_INSTANCE": 0,
+    "SHELL": "/bin/bash",
+    "E2B_TEMPLATE_ID": "nlhz8vlwyupq845jsdg9",
+    "E2B_EVENTS_ADDRESS": "http://192.0.2.1",
+    "PWD": "/home/user",
+    "LOGNAME": "user",
+    "HOME": "/home/user",
+    "E2B_SANDBOX_ID": "irjxzdvnc5oww7edw4yrj",
+    "OWNER_SECRET": "xxNUrU5ij5m4ZZkndbapL3FShu0TTvpm",
+    "USER": "user",
+    "SHLVL": "3",
+    "PATH": "/tmp/zenith-fake-docker/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games",
+    "ZENITH_LOG": "/tmp/zenith-installer-check.log",
+    "E2B_SANDBOX": "true",
+    "OLDPWD": "/home/user",
+    "_": "/usr/bin/pm2",
+    "PM2_USAGE": "CLI",
+    "PM2_HOME": "/home/user/.pm2",
+    "unique_id": "d6b23b79-2dd3-4d94-8b63-36bfca725a91",
+    "status": "online",
+    "pm_uptime": 1792218301574,
+    "axm_actions": [
+      {
+        "action_name": "km:heapdump",
+        "action_type": "internal",
+        "arity": 2
+      },
+      {
+        "action_name": "km:cpu:profiling:start",
+        "action_type": "internal",
+        "arity": 2
+      },
+      {
+        "action_name": "km:cpu:profiling:stop",
+        "action_type": "internal",
+        "arity": 1
+      },
+      {
+        "action_name": "km:heap:sampling:start",
+        "action_type": "internal",
+        "arity": 2
+      },
+      {
+        "action_name": "km:heap:sampling:stop",
+        "action_type": "internal",
+        "arity": 1
+      }
+    ],
+    "axm_monitor": {},
+    "axm_options": {
+      "error": true,
+      "heapdump": true,
+      "feature.profiler.heapsnapshot": false,
+      "feature.profiler.heapsampling": true,
+      "feature.profiler.cpu_js": true,
+      "latency": true,
+      "catchExceptions": true,
+      "profiling": true,
+      "metrics": {
+        "v8": true,
+        "network": false,
+        "eventLoop": true,
+        "runtime": true,
+        "http": true
+      },
+      "standalone": false,
+      "tracing": {
+        "enabled": false,
+        "outbound": false
+      },
+      "module_conf": {},
+      "apm": {
+        "type": "node",
+        "version": "8.0.0"
+      },
+      "module_name": "zenith-panel",
+      "module_version": "7.0.4"
+    },
+    "axm_dynamic": {},
+    "created_at": 1792218301574,
+    "restart_time": 0,
+    "unstable_restarts": 0,
+    "version": "1.0.0",
+    "node_version": "20.20.2"
+  }
+]

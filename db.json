@@ -1,0 +1,673 @@
+{
+  "users": [
+    {
+      "id": "usr_mvaxnhaaa3abf403",
+      "username": "admin@gmail.com",
+      "email": "admin@gmail.com",
+      "password": "$2a$10$LunQVgKMJIiu6KYRFVIpguqbbiQKsoCCz3VxuaSSFqGjthKGVdF6y",
+      "role": "owner",
+      "passwordVersion": 0,
+      "createdAt": "2026-10-16T12:17:27.106Z",
+      "suspended": false,
+      "createdBy": "cli",
+      "lastLoginAt": "2026-10-22T07:46:00.483Z",
+      "lastLoginIp": "127.0.0.1"
+    }
+  ],
+  "servers": [],
+  "nodes": [
+    {
+      "id": "local",
+      "name": "Local Node",
+      "description": "Auto-registered by install.sh on e2b.local",
+      "fqdn": "localhost",
+      "local": true,
+      "portRange": {
+        "start": 25565,
+        "end": 25665
+      },
+      "memoryLimit": 0,
+      "diskLimit": 0,
+      "createdAt": "2026-10-16T08:31:21.634Z",
+      "lastHeartbeat": "2026-10-22T10:12:50.226Z",
+      "status": "online",
+      "stats": {
+        "cpu": 49.7,
+        "cores": 2,
+        "cpuModel": "Intel(R) Xeon(R) Processor @ 2.60GHz",
+        "load": 0.2,
+        "memory": {
+          "total": 2079133696,
+          "free": 1385996288
+        },
+        "disk": {
+          "total": 26186182656,
+          "free": 21528670208,
+          "used": 4657512448
+        },
+        "network": {
+          "interfaces": 2,
+          "rxBytes": 542721179,
+          "txBytes": 2477276,
+          "rxRate": 13995,
+          "txRate": 7521,
+          "at": "2026-10-17T06:32:10.370Z"
+        },
+        "uptime": 621.46,
+        "platform": "Linux 6.1.158+",
+        "arch": "x64",
+        "hostname": "e2b.local",
+        "node": "v20.20.2",
+        "panelUptime": 156.669392743,
+        "memoryOfPanel": 63377408,
+        "docker": {
+          "available": false,
+          "engine": null,
+          "client": null,
+          "apiVersion": null,
+          "storageDriver": null,
+          "error": "spawnSync docker ENOENT",
+          "checkedAt": "2026-10-22T10:12:50.228Z"
+        },
+        "java": {
+          "available": true,
+          "version": "openjdk version \"11\" 2018-09-25"
+        }
+      },
+      "backend": "process",
+      "detected": {
+        "detectedAt": "2026-10-17T06:32:10.490Z",
+        "hostname": "e2b.local",
+        "platform": "Linux 6.1.158+",
+        "distro": "Debian GNU/Linux 13 (trixie)",
+        "arch": "x64",
+        "kernel": "6.1.158+",
+        "cores": 2,
+        "cpuModel": "Intel(R) Xeon(R) Processor @ 2.60GHz",
+        "memory": {
+          "total": 2079141888,
+          "free": 1229709312,
+          "available": 1229709312
+        },
+        "disk": {
+          "filesystem": "/dev/root",
+          "mount": "/",
+          "total": 26186182656,
+          "free": 21243457536,
+          "used": 4942725120,
+          "percent": 19
+        },
+        "load": [
+          0.35,
+          0.32,
+          0.17
+        ],
+        "uptime": 823.66,
+        "node": "v20.20.2",
+        "ip": "",
+        "addresses": [
+          {
+            "iface": "eth0",
+            "address": "169.254.0.21",
+            "family": "IPv4",
+            "mac": "02:fc:00:00:00:05"
+          },
+          {
+            "iface": "eth0",
+            "address": "fe80::fc:ff:fe00:5",
+            "family": "IPv6",
+            "mac": "02:fc:00:00:00:05"
+          }
+        ],
+        "java": {
+          "available": true,
+          "version": "openjdk version \"11\" 2018-09-25"
+        },
+        "docker": {
+          "available": false,
+          "engine": null,
+          "client": null,
+          "apiVersion": null,
+          "storageDriver": null,
+          "error": "spawnSync docker ENOENT",
+          "checkedAt": "2026-10-17T06:32:10.428Z"
+        }
+      },
+      "token": "d73956fc2e29546e0033795c576b6e4afe73739de23cc05b",
+      "health": {
+        "at": "2026-10-17T06:32:10.428Z",
+        "ok": true,
+        "checks": [
+          {
+            "name": "panel process",
+            "ok": true,
+            "detail": "pid 7381, up 157s"
+          },
+          {
+            "name": "cpu",
+            "ok": true,
+            "detail": "2 cores, load 0.35"
+          },
+          {
+            "name": "memory",
+            "ok": true,
+            "detail": "1983 MB total, 40.9% used"
+          },
+          {
+            "name": "disk",
+            "ok": true,
+            "detail": "20.1 GB free of 24.4 GB"
+          },
+          {
+            "name": "java",
+            "ok": true,
+            "detail": "openjdk version \"11\" 2018-09-25"
+          },
+          {
+            "name": "docker",
+            "ok": true,
+            "detail": "not available: spawnSync docker ENOENT (optional: this node uses plain processes)"
+          },
+          {
+            "name": "allocation 25565",
+            "ok": true,
+            "detail": "free"
+          }
+        ],
+        "latencyMs": 59
+      }
+    }
+  ],
+  "apiKeys": [],
+  "activity": [
+    {
+      "id": "act_1792655160483_rdhr5",
+      "at": "2026-10-22T07:46:00.483Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792654976437_yb3q1",
+      "at": "2026-10-22T07:42:56.437Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792654935542_372wa",
+      "at": "2026-10-22T07:42:15.542Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792652800852_avcvx",
+      "at": "2026-10-22T07:06:40.852Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792652764991_nnrfm",
+      "at": "2026-10-22T07:06:04.991Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792651031013_on20n",
+      "at": "2026-10-22T06:37:11.013Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792650982425_c84km",
+      "at": "2026-10-22T06:36:22.425Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792650962323_xjbts",
+      "at": "2026-10-22T06:36:02.323Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792650951954_uxtnq",
+      "at": "2026-10-22T06:35:51.954Z",
+      "actor": "admin@gmail.com",
+      "action": "settings.update",
+      "detail": "panelBackground, panelBackgroundOpacity"
+    },
+    {
+      "id": "act_1792650951909_57jvo",
+      "at": "2026-10-22T06:35:51.909Z",
+      "actor": "admin@gmail.com",
+      "action": "settings.update",
+      "detail": "panelBackground, panelBackgroundOpacity"
+    },
+    {
+      "id": "act_1792650951890_twmvq",
+      "at": "2026-10-22T06:35:51.890Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792606930129_21ygr",
+      "at": "2026-10-21T18:22:10.129Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792606894197_itf9s",
+      "at": "2026-10-21T18:21:34.197Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792606853635_uh0ay",
+      "at": "2026-10-21T18:20:53.635Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792606728229_pq99u",
+      "at": "2026-10-21T18:18:48.229Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792606655561_g9doa",
+      "at": "2026-10-21T18:17:35.562Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792606651673_95vwa",
+      "at": "2026-10-21T18:17:31.673Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792605298642_3dodz",
+      "at": "2026-10-21T17:54:58.642Z",
+      "actor": "admin@gmail.com",
+      "action": "settings.update",
+      "detail": "theme, accentColor, panelLogo, allowRegistration"
+    },
+    {
+      "id": "act_1792605298624_5rbon",
+      "at": "2026-10-21T17:54:58.624Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792605071498_ojpuj",
+      "at": "2026-10-21T17:51:11.498Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792605060019_ijom2",
+      "at": "2026-10-21T17:51:00.019Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792218753194_62orh",
+      "at": "2026-10-17T06:32:33.194Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792218578937_zua4l",
+      "at": "2026-10-17T06:29:38.937Z",
+      "actor": "admin@gmail.com",
+      "action": "java.prune",
+      "detail": "Java 21 (52.9 MB)"
+    },
+    {
+      "id": "act_1792218578909_8lyug",
+      "at": "2026-10-17T06:29:38.909Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792218576816_tjqdx",
+      "at": "2026-10-17T06:29:36.816Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792218380191_1fsru",
+      "at": "2026-10-17T06:26:20.191Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792218371003_mu7mc",
+      "at": "2026-10-17T06:26:11.003Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792174282938_b86ec",
+      "at": "2026-10-16T18:11:22.938Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792174282461_81suk",
+      "at": "2026-10-16T18:11:22.461Z",
+      "actor": "admin@gmail.com",
+      "action": "node.auto-refresh",
+      "detail": "Local Node"
+    },
+    {
+      "id": "act_1792174282312_y33pr",
+      "at": "2026-10-16T18:11:22.312Z",
+      "actor": "admin@gmail.com",
+      "action": "node.auto-refresh",
+      "detail": "Local Node"
+    },
+    {
+      "id": "act_1792174282111_27gvf",
+      "at": "2026-10-16T18:11:22.111Z",
+      "actor": "admin@gmail.com",
+      "action": "node.health-check",
+      "detail": "local: healthy"
+    },
+    {
+      "id": "act_1792174281691_r5b3v",
+      "at": "2026-10-16T18:11:21.691Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792154098467_me7u0",
+      "at": "2026-10-16T12:34:58.467Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792154098056_hy53m",
+      "at": "2026-10-16T12:34:58.056Z",
+      "actor": "admin@gmail.com",
+      "action": "node.auto-refresh",
+      "detail": "Local Node"
+    },
+    {
+      "id": "act_1792154097914_z2571",
+      "at": "2026-10-16T12:34:57.914Z",
+      "actor": "admin@gmail.com",
+      "action": "node.auto-refresh",
+      "detail": "Local Node"
+    },
+    {
+      "id": "act_1792154097756_1p0fs",
+      "at": "2026-10-16T12:34:57.756Z",
+      "actor": "admin@gmail.com",
+      "action": "node.health-check",
+      "detail": "local: healthy"
+    },
+    {
+      "id": "act_1792154097453_rfkur",
+      "at": "2026-10-16T12:34:57.453Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792154087061_ha7xv",
+      "at": "2026-10-16T12:34:47.061Z",
+      "actor": "admin@gmail.com",
+      "action": "node.auto-refresh",
+      "detail": "Local Node"
+    },
+    {
+      "id": "act_1792154086929_h1uf8",
+      "at": "2026-10-16T12:34:46.929Z",
+      "actor": "admin@gmail.com",
+      "action": "node.auto-refresh",
+      "detail": "Local Node"
+    },
+    {
+      "id": "act_1792154086770_ztig2",
+      "at": "2026-10-16T12:34:46.770Z",
+      "actor": "admin@gmail.com",
+      "action": "node.health-check",
+      "detail": "local: healthy"
+    },
+    {
+      "id": "act_1792154086492_nnk5h",
+      "at": "2026-10-16T12:34:46.492Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792153707947_18k15",
+      "at": "2026-10-16T12:28:27.947Z",
+      "actor": "admin@gmail.com",
+      "action": "node.auto-refresh",
+      "detail": "Local Node"
+    },
+    {
+      "id": "act_1792153707814_eyjti",
+      "at": "2026-10-16T12:28:27.814Z",
+      "actor": "admin@gmail.com",
+      "action": "node.auto-refresh",
+      "detail": "Local Node"
+    },
+    {
+      "id": "act_1792153707658_uiun4",
+      "at": "2026-10-16T12:28:27.658Z",
+      "actor": "admin@gmail.com",
+      "action": "node.health-check",
+      "detail": "local: healthy"
+    },
+    {
+      "id": "act_1792153707277_oz69r",
+      "at": "2026-10-16T12:28:27.277Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792153585849_k9b1g",
+      "at": "2026-10-16T12:26:25.849Z",
+      "actor": "admin@gmail.com",
+      "action": "node.auto-refresh",
+      "detail": "Local Node"
+    },
+    {
+      "id": "act_1792153585720_jqkte",
+      "at": "2026-10-16T12:26:25.720Z",
+      "actor": "admin@gmail.com",
+      "action": "node.auto-refresh",
+      "detail": "Local Node"
+    },
+    {
+      "id": "act_1792153585559_n1n1s",
+      "at": "2026-10-16T12:26:25.559Z",
+      "actor": "admin@gmail.com",
+      "action": "node.health-check",
+      "detail": "local: healthy"
+    },
+    {
+      "id": "act_1792153585288_m8xao",
+      "at": "2026-10-16T12:26:25.288Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792153581932_gjlzl",
+      "at": "2026-10-16T12:26:21.932Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792153485748_kgbpq",
+      "at": "2026-10-16T12:24:45.748Z",
+      "actor": "admin@gmail.com",
+      "action": "node.auto-refresh",
+      "detail": "Local Node"
+    },
+    {
+      "id": "act_1792153485620_6x2mg",
+      "at": "2026-10-16T12:24:45.620Z",
+      "actor": "admin@gmail.com",
+      "action": "node.auto-refresh",
+      "detail": "Local Node"
+    },
+    {
+      "id": "act_1792153485460_cp878",
+      "at": "2026-10-16T12:24:45.460Z",
+      "actor": "admin@gmail.com",
+      "action": "node.health-check",
+      "detail": "local: healthy"
+    },
+    {
+      "id": "act_1792153485025_lftvx",
+      "at": "2026-10-16T12:24:45.025Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792153484864_11kb7",
+      "at": "2026-10-16T12:24:44.864Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792153426698_vpr7x",
+      "at": "2026-10-16T12:23:46.698Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792153350675_mw50e",
+      "at": "2026-10-16T12:22:30.675Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792153348040_id2m4",
+      "at": "2026-10-16T12:22:28.040Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792153066930_vg91f",
+      "at": "2026-10-16T12:17:46.930Z",
+      "actor": "admin@gmail.com",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792143455207_3ppy0",
+      "at": "2026-10-16T09:37:35.207Z",
+      "actor": "panel",
+      "action": "server.delete",
+      "serverName": "Plugin Test"
+    },
+    {
+      "id": "act_1792143305263_tz0y2",
+      "at": "2026-10-16T09:35:05.263Z",
+      "actor": "panel",
+      "action": "server.delete",
+      "serverName": "Remote Paper"
+    },
+    {
+      "id": "act_1792141075985_ahjk9",
+      "at": "2026-10-16T08:57:55.985Z",
+      "actor": "dave",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792140984043_oehey",
+      "at": "2026-10-16T08:56:24.043Z",
+      "actor": "panel",
+      "action": "server.delete",
+      "serverName": "Carl Test"
+    },
+    {
+      "id": "act_1792140984026_qxzxs",
+      "at": "2026-10-16T08:56:24.026Z",
+      "actor": "panel",
+      "action": "server.delete",
+      "serverName": "Bob Vanilla"
+    },
+    {
+      "id": "act_1792140925571_i3dym",
+      "at": "2026-10-16T08:55:25.571Z",
+      "actor": "carl",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792140913488_f5ppa",
+      "at": "2026-10-16T08:55:13.488Z",
+      "actor": "bob",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    },
+    {
+      "id": "act_1792140686648_v5huz",
+      "at": "2026-10-16T08:51:26.648Z",
+      "actor": "bob",
+      "action": "auth.login",
+      "detail": "127.0.0.1"
+    }
+  ],
+  "settings": {
+    "panelName": "Zenith Panel",
+    "allowRegistration": false,
+    "defaultJava": "java",
+    "defaultMemory": 2048,
+    "defaultPort": 25565,
+    "maxServersPerUser": 5,
+    "theme": "midnight",
+    "accentColor": "#3b82f6",
+    "panelLogo": "",
+    "panelBackground": "",
+    "panelBackgroundOpacity": 28,
+    "installJavaAutomatically": true,
+    "autoRestartOnCrash": false,
+    "dnsProvider": "manual",
+    "dnsDomain": "",
+    "dnsIp": "",
+    "discordEnabled": false,
+    "discordAllowRegistration": false
+  }
+}

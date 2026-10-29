@@ -1,0 +1,50 @@
+2026-10-17T06:25:01: [90m2026-10-17 06:25:01[0m [36mINFO [0m [35m[ws][0m console socket listening on /ws
+2026-10-17T06:25:01: [90m2026-10-17 06:25:01[0m [36mINFO [0m [35m[scheduler][0m cron ticker started (30s resolution)
+2026-10-17T06:25:01: [90m2026-10-17 06:25:01[0m [32mOK   [0m [35m[sftp][0m SFTP server listening on 0.0.0.0:2022 (chrooted per server)
+2026-10-17T06:25:01: [90m2026-10-17 06:25:01[0m [32mOK   [0m [35m[panel][0m Zenith Panel v1.0.0 listening on http://0.0.0.0:8080
+2026-10-17T06:25:01: [90m2026-10-17 06:25:01[0m [36mINFO [0m [35m[panel][0m 0 server(s), 3 user(s) | data: /home/user/data
+2026-10-17T06:25:01: [90m2026-10-17 06:25:01[0m [32mOK   [0m [35m[sftp][0m SFTP ready on port 2022
+2026-10-17T06:25:07: [90m2026-10-17 06:25:07[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:25:08: [90m2026-10-17 06:25:08[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:25:09: [90m2026-10-17 06:25:09[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:25:10: [90m2026-10-17 06:25:10[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:26:16: [90m2026-10-17 06:26:16[0m [33mWARN [0m [35m[panel][0m SIGINT received - shutting down
+2026-10-17T06:26:16: [90m2026-10-17 06:26:16[0m [36mINFO [0m [35m[runtime][0m Stopping 0 running server(s)...
+2026-10-17T06:26:16: [90m2026-10-17 06:26:16[0m [36mINFO [0m [35m[sftp][0m SFTP server stopped
+2026-10-17T06:26:17: [90m2026-10-17 06:26:17[0m [36mINFO [0m [35m[ws][0m console socket listening on /ws
+2026-10-17T06:26:17: [90m2026-10-17 06:26:17[0m [36mINFO [0m [35m[scheduler][0m cron ticker started (30s resolution)
+2026-10-17T06:26:17: [90m2026-10-17 06:26:17[0m [32mOK   [0m [35m[sftp][0m SFTP server listening on 0.0.0.0:2022 (chrooted per server)
+2026-10-17T06:26:17: [90m2026-10-17 06:26:17[0m [32mOK   [0m [35m[panel][0m Zenith Panel v1.0.0 listening on http://0.0.0.0:8080
+2026-10-17T06:26:17: [90m2026-10-17 06:26:17[0m [36mINFO [0m [35m[panel][0m 0 server(s), 3 user(s) | data: /home/user/data
+2026-10-17T06:26:17: [90m2026-10-17 06:26:17[0m [32mOK   [0m [35m[sftp][0m SFTP ready on port 2022
+2026-10-17T06:28:20: [90m2026-10-17 06:28:20[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:28:40: [90m2026-10-17 06:28:40[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:28:41: [90m2026-10-17 06:28:41[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:28:50: [90m2026-10-17 06:28:50[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:29:10: [90m2026-10-17 06:29:10[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:29:10: [90m2026-10-17 06:29:10[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:29:20: [90m2026-10-17 06:29:20[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:29:20: [90m2026-10-17 06:29:20[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:29:20: [90m2026-10-17 06:29:20[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:29:33: [90m2026-10-17 06:29:33[0m [33mWARN [0m [35m[panel][0m SIGINT received - shutting down
+2026-10-17T06:29:33: [90m2026-10-17 06:29:33[0m [36mINFO [0m [35m[runtime][0m Stopping 0 running server(s)...
+2026-10-17T06:29:33: [90m2026-10-17 06:29:33[0m [36mINFO [0m [35m[sftp][0m SFTP server stopped
+2026-10-17T06:29:33: [90m2026-10-17 06:29:33[0m [36mINFO [0m [35m[ws][0m console socket listening on /ws
+2026-10-17T06:29:33: [90m2026-10-17 06:29:33[0m [36mINFO [0m [35m[scheduler][0m cron ticker started (30s resolution)
+2026-10-17T06:29:33: [90m2026-10-17 06:29:33[0m [32mOK   [0m [35m[sftp][0m SFTP server listening on 0.0.0.0:2022 (chrooted per server)
+2026-10-17T06:29:33: [90m2026-10-17 06:29:33[0m [32mOK   [0m [35m[panel][0m Zenith Panel v1.0.0 listening on http://0.0.0.0:8080
+2026-10-17T06:29:33: [90m2026-10-17 06:29:33[0m [36mINFO [0m [35m[panel][0m 0 server(s), 3 user(s) | data: /home/user/data
+2026-10-17T06:29:33: [90m2026-10-17 06:29:33[0m [32mOK   [0m [35m[sftp][0m SFTP ready on port 2022
+2026-10-17T06:29:38: [90m2026-10-17 06:29:38[0m [36mINFO [0m [35m[java][0m pruned /var/tmp/zenith/java/jre-21 (52.9 MB)
+2026-10-17T06:32:09: [90m2026-10-17 06:32:09[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:32:09: [90m2026-10-17 06:32:09[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:32:10: [90m2026-10-17 06:32:10[0m [36mINFO [0m [35m[nodes][0m node Local Node refreshed by auto-registration
+2026-10-17T06:32:29: [90m2026-10-17 06:32:29[0m [33mWARN [0m [35m[panel][0m SIGINT received - shutting down
+2026-10-17T06:32:29: [90m2026-10-17 06:32:29[0m [36mINFO [0m [35m[runtime][0m Stopping 0 running server(s)...
+2026-10-17T06:32:29: [90m2026-10-17 06:32:29[0m [36mINFO [0m [35m[sftp][0m SFTP server stopped
+2026-10-17T06:32:30: [90m2026-10-17 06:32:30[0m [36mINFO [0m [35m[ws][0m console socket listening on /ws
+2026-10-17T06:32:30: [90m2026-10-17 06:32:30[0m [36mINFO [0m [35m[scheduler][0m cron ticker started (30s resolution)
+2026-10-17T06:32:30: [90m2026-10-17 06:32:30[0m [32mOK   [0m [35m[sftp][0m SFTP server listening on 0.0.0.0:2022 (chrooted per server)
+2026-10-17T06:32:30: [90m2026-10-17 06:32:30[0m [32mOK   [0m [35m[panel][0m Zenith Panel v1.0.0 listening on http://0.0.0.0:8080
+2026-10-17T06:32:30: [90m2026-10-17 06:32:30[0m [36mINFO [0m [35m[panel][0m 0 server(s), 3 user(s) | data: /home/user/data
+2026-10-17T06:32:30: [90m2026-10-17 06:32:30[0m [32mOK   [0m [35m[sftp][0m SFTP ready on port 2022

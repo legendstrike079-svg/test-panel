@@ -1,0 +1,34 @@
+2026-10-17T06:25:01: PM2 log: ===============================================================================
+2026-10-17T06:25:01: PM2 log: --- New PM2 Daemon started ----------------------------------------------------
+2026-10-17T06:25:01: PM2 log: Time                 : Sat Oct 17 2026 06:25:01 GMT+0000 (Coordinated Universal Time)
+2026-10-17T06:25:01: PM2 log: PM2 version          : 7.0.4
+2026-10-17T06:25:01: PM2 log: Node.js version      : 20.20.2
+2026-10-17T06:25:01: PM2 log: Current arch         : x64
+2026-10-17T06:25:01: PM2 log: PM2 home             : /home/user/.pm2
+2026-10-17T06:25:01: PM2 log: PM2 PID file         : /home/user/.pm2/pm2.pid
+2026-10-17T06:25:01: PM2 log: RPC socket file      : /home/user/.pm2/rpc.sock
+2026-10-17T06:25:01: PM2 log: BUS socket file      : /home/user/.pm2/pub.sock
+2026-10-17T06:25:01: PM2 log: Application log path : /home/user/.pm2/logs
+2026-10-17T06:25:01: PM2 log: Worker Interval      : 30000
+2026-10-17T06:25:01: PM2 log: Process dump file    : /home/user/.pm2/dump.pm2
+2026-10-17T06:25:01: PM2 log: Concurrent actions   : 2
+2026-10-17T06:25:01: PM2 log: SIGTERM timeout      : 1600
+2026-10-17T06:25:01: PM2 log: Runtime Binary       : /usr/bin/node
+2026-10-17T06:25:01: PM2 log: ===============================================================================
+2026-10-17T06:25:01: PM2 log: App [zenith-panel:0] starting in -fork mode-
+2026-10-17T06:25:01: PM2 log: App [zenith-panel:0] online
+2026-10-17T06:26:16: PM2 log: Stopping app:zenith-panel id:0
+2026-10-17T06:26:16: PM2 log: App [zenith-panel:0] exited with code [0] via signal [SIGINT]
+2026-10-17T06:26:17: PM2 log: pid=4133 msg=process tree killed (1 pids)
+2026-10-17T06:26:17: PM2 log: App [zenith-panel:0] starting in -fork mode-
+2026-10-17T06:26:17: PM2 log: App [zenith-panel:0] online
+2026-10-17T06:29:33: PM2 log: Stopping app:zenith-panel id:0
+2026-10-17T06:29:33: PM2 log: App [zenith-panel:0] exited with code [0] via signal [SIGINT]
+2026-10-17T06:29:33: PM2 log: pid=5560 msg=process tree killed (1 pids)
+2026-10-17T06:29:33: PM2 log: App [zenith-panel:0] starting in -fork mode-
+2026-10-17T06:29:33: PM2 log: App [zenith-panel:0] online
+2026-10-17T06:32:29: PM2 log: Stopping app:zenith-panel id:0
+2026-10-17T06:32:29: PM2 log: App [zenith-panel:0] exited with code [0] via signal [SIGINT]
+2026-10-17T06:32:30: PM2 log: pid=7381 msg=process tree killed (1 pids)
+2026-10-17T06:32:30: PM2 log: App [zenith-panel:0] starting in -fork mode-
+2026-10-17T06:32:30: PM2 log: App [zenith-panel:0] online
